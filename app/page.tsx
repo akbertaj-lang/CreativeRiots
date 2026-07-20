@@ -22,7 +22,7 @@ function Play() {
 
 export default function Home() {
   return (
-    <main>
+    <main data-release="public-v2">
       <header className="nav shell">
         <a className="brand" href="#top" aria-label="Signal Foundry home">SIGNAL<span>•</span>FOUNDRY</a>
         <a className="text-link" href="#method">THE METHOD ↘</a>
