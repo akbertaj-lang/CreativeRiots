@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check, Menu, MoveUpRight, Play, X } from "lucide-react";
+import { ArrowRight, BadgeHelp, Check, Clapperboard, Clock3, EyeOff, Gauge, Menu, MessageCircle, MoveUpRight, Play, RadioTower, Rocket, Search, UserRoundX, VolumeX, X, type LucideIcon } from "lucide-react";
 import { homepage } from "@/content/homepage";
 import styles from "./page.module.css";
 
@@ -32,97 +32,13 @@ function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
   return <>{display.toLocaleString()}{suffix}</>;
 }
 
-function BrandSignalIcon() {
-  return <svg className={`${styles.engineIcon} ${styles.brandSignalIcon}`} viewBox="0 0 240 190" aria-hidden="true">
-    <g className={styles.iconRoute}><path d="M0 95h88"/><path d="M166 95h74"/></g>
-    <g className={styles.iconSecondary}>
-      <path d="M28 30H69L93 57"/><path d="M212 31H171L148 57"/><path d="M28 158H70L94 132"/><path d="M212 158H171L147 132"/>
-      <circle cx="27" cy="30" r="3"/><circle cx="213" cy="31" r="3"/><circle cx="27" cy="158" r="3"/><circle cx="213" cy="158" r="3"/>
-    </g>
-    <g className={styles.fingerprintLines}>
-      <path d="M95 119c-8-13-10-36-2-49 7-12 18-19 31-19 24 0 39 17 39 40 0 21-9 38-17 50"/>
-      <path d="M106 129c-8-15-12-37-6-50 5-11 14-17 25-17 17 0 28 12 28 29 0 18-8 35-14 46"/>
-      <path d="M117 136c-6-15-10-34-6-47 2-9 8-16 16-16 10 0 17 8 17 19 0 15-6 29-11 40"/>
-      <path d="M127 123c-4-12-7-25-5-33 1-4 3-7 6-7 4 0 7 4 7 10 0 9-3 18-6 26"/>
-    </g>
-    <g className={styles.iconLabels}><text x="28" y="22">VOICE</text><text x="177" y="22">STORY</text><text x="28" y="174">AUDIENCE</text><text x="178" y="174">VISION</text></g>
-    <circle className={styles.iconPulse} cx="128" cy="93" r="4"/>
-  </svg>;
-}
+const painIcons: LucideIcon[] = [EyeOff, UserRoundX, VolumeX, Clock3, BadgeHelp, Gauge];
+const engineIcons: LucideIcon[] = [Search, Clapperboard, RadioTower];
+const startedIcons: LucideIcon[] = [MessageCircle, Clapperboard, Rocket];
 
-function ContentTransformationIcon() {
-  return <svg className={`${styles.engineIcon} ${styles.contentTransformationIcon}`} viewBox="0 0 340 190" aria-hidden="true">
-    <g className={styles.iconRoute}><path d="M0 95h18"/><path d="M331 95h9"/></g>
-    <g className={styles.iconPrimary}>
-      <rect x="18" y="56" width="78" height="78" rx="2"/><path d="M48 82l24 13-24 13z"/>
-      <path d="M96 95h54"/><path d="M162 95h44"/><path d="M206 95l24-50"/><path d="M206 95h25"/><path d="M206 95l24 51"/>
-    </g>
-    <g className={styles.outputForms}>
-      <rect x="231" y="18" width="87" height="55" rx="2"/><path d="M244 31h43M244 39h60"/>
-      <rect x="231" y="82" width="42" height="82" rx="2"/><path d="M242 146h20"/>
-      <rect x="282" y="84" width="43" height="38" rx="2"/><rect x="288" y="90" width="43" height="38" rx="2"/>
-      <path d="M284 145h39M284 153h31M284 161h35"/>
-    </g>
-    <g className={styles.iconLabels}><text x="24" y="151">YOUR INPUT</text><text x="232" y="181">WEEKLY CONTENT</text></g>
-    <circle className={styles.iconPulse} cx="156" cy="95" r="6"/><circle className={styles.iconNode} cx="206" cy="95" r="3"/>
-  </svg>;
+function SpatialIcon({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
+  return <div className={styles.spatialIcon} aria-hidden="true"><span/><Icon strokeWidth={1.35}/><small>{label}</small><i/><b/></div>;
 }
-
-function DistributionSignalIcon() {
-  return <svg className={`${styles.engineIcon} ${styles.distributionSignalIcon}`} viewBox="0 0 240 190" aria-hidden="true">
-    <g className={styles.iconRoute}><path d="M0 95h18"/></g>
-    <g className={styles.iconPrimary}><rect x="18" y="66" width="58" height="58" rx="2"/><path d="M30 79h34M30 88h27M30 110h20"/><path d="M76 95h47"/></g>
-    <g className={styles.distributionPaths}>
-      <path d="M132 95h25c16 0 15-46 35-46h19"/><path d="M132 95h80"/><path d="M132 95h25c16 0 15 46 35 46h19"/>
-      <path d="M167 66c10 7 16 17 16 29s-6 22-16 29"/><path d="M176 57c14 10 23 23 23 38s-9 29-23 38"/>
-    </g>
-    <circle className={styles.iconPulse} cx="127" cy="95" r="6"/>
-    <circle className={styles.iconNode} cx="213" cy="49" r="4"/><circle className={styles.iconNode} cx="213" cy="95" r="4"/><circle className={styles.iconNode} cx="213" cy="141" r="4"/>
-    <g className={styles.iconLabels}><text x="18" y="142">CONTENT</text><text x="174" y="174">AUDIENCE</text></g>
-  </svg>;
-}
-
-function ConversationOpeningVisual() {
-  return <svg className={styles.startedIllustration} viewBox="0 0 150 130" aria-hidden="true">
-    <g className={styles.startedInkLines}>
-      <path d="M11 43h45c8 0 14 6 14 14v13c0 8-6 14-14 14H38L25 96l4-12H25c-8 0-14-6-14-14V43Z"/>
-      <path d="M139 22H94c-8 0-14 6-14 14v13c0 8 6 14 14 14h18l13 12-4-12h4c8 0 14-6 14-14V22Z"/>
-      <path d="M26 55h28M26 65h18M96 36h27M96 46h20"/>
-      <rect x="52" y="101" width="47" height="23" rx="2"/><path d="M62 101v-6M89 101v-6M62 112h27"/>
-    </g>
-    <circle className={styles.startedActiveNode} cx="75" cy="73" r="4"/>
-  </svg>;
-}
-
-function SystemAssemblyVisual() {
-  return <svg className={styles.startedIllustration} viewBox="0 0 180 150" aria-hidden="true">
-    <g className={styles.startedInkLines}>
-      <circle cx="90" cy="75" r="24"/><circle cx="90" cy="75" r="9"/>
-      <path d="M90 51V22M114 75h29M90 99v29M66 75H37"/>
-      <path d="M73 58 51 36M107 58l22-22M107 92l22 22M73 92l-22 22"/>
-      <circle cx="90" cy="17" r="6"/><circle cx="149" cy="75" r="6"/><circle cx="90" cy="134" r="6"/><circle cx="31" cy="75" r="6"/>
-      <rect x="38" y="23" width="17" height="17" rx="2"/><rect x="125" y="110" width="17" height="17" rx="2"/>
-    </g>
-    <g className={styles.startedRedLines}><path d="M90 51V22M114 75h29M107 92l22 22"/></g>
-    <circle className={styles.startedActiveNode} cx="90" cy="75" r="5"/>
-  </svg>;
-}
-
-function RecognitionVisual() {
-  return <svg className={styles.startedIllustration} viewBox="0 0 220 170" aria-hidden="true">
-    <g className={styles.startedInkLines}>
-      <circle cx="61" cy="105" r="12"/><path d="M79 105h27"/>
-      <path d="M88 82c15-19 35-28 59-28M94 105c21 0 39-8 55-24M88 128c17 21 39 31 66 31"/>
-      <path d="M117 71c18-18 39-25 64-22M125 105c23-1 43-11 59-30M117 139c22 14 46 19 72 13"/>
-      <path d="M177 122l18-18M195 104v13M195 104h-13"/>
-    </g>
-    <g className={styles.startedRecognitionSignal}><path d="M43 88c-9 9-9 25 0 34M33 78c-16 16-16 38 0 54"/></g>
-    <g className={styles.startedAudienceNodes}><circle cx="149" cy="54" r="4"/><circle cx="150" cy="81" r="4"/><circle cx="154" cy="159" r="4"/><circle cx="181" cy="49" r="5"/><circle cx="184" cy="75" r="5"/><circle cx="189" cy="152" r="5"/></g>
-    <circle className={`${styles.startedActiveNode} ${styles.startedSignalPulse}`} cx="61" cy="105" r="5"/>
-  </svg>;
-}
-
-const startedVisuals = [ConversationOpeningVisual, SystemAssemblyVisual, RecognitionVisual] as const;
 
 function ApprovedLogoMarquee() {
   const logoAlt = "Magic Eden, Animoca Brands, Karate Combat, Pixelmon, Solana Gaming, Jupiter, Forbes Web3, Abstract, Doodles, EDUCHAIN, Pump.fun, Meteora Ecosystem, Nibiru, Pixels, Agglayer, Seedify, Revoke and Somnia";
@@ -258,9 +174,10 @@ export default function HeroVariationPage() {
           <ol>{pains.map((pain,index)=>{
             const emphasis = painEmphasis[index];
             const [before, after] = pain.split(emphasis);
+            const PainIcon = painIcons[index];
             return <li key={pain}>
               <span className={styles.visibilityIndex} aria-hidden="true">0{index+1}</span>
-              <span className={styles.visibilityNode} aria-hidden="true"/>
+              <span className={styles.visibilityNode} aria-hidden="true"><PainIcon size={19} strokeWidth={1.4}/></span>
               <p className={styles.visibilityStatement}>{before}<strong>{emphasis}</strong>{after}</p>
             </li>;
           })}</ol>
@@ -281,19 +198,19 @@ export default function HeroVariationPage() {
         <article className={`${styles.engineStage} ${styles.engineStageOne}`}>
           <header><span className={styles.engineNumber}>01</span><h3 className={styles.engineStageTitle}>WE LEARN YOU</h3></header>
           <p className={styles.engineCopy}>We study your brand inside out. Your story, your voice, your vision, and who you&apos;re really talking to. Before we make anything, we understand you.</p>
-          <div className={styles.engineVisual}><BrandSignalIcon/></div>
+          <div className={styles.engineVisual}><SpatialIcon icon={engineIcons[0]} label="DISCOVER"/></div>
         </article>
 
         <article className={`${styles.engineStage} ${styles.engineStageTwo}`}>
           <header><span className={styles.engineNumber}>02</span><h3 className={styles.engineStageTitle}>WE BUILD YOUR CONTENT</h3></header>
           <p className={styles.engineCopy}>Your team turns a few hours of your time into content that sounds and looks like you, made to land with your audience, week after week.</p>
-          <div className={styles.engineVisual}><ContentTransformationIcon/></div>
+          <div className={styles.engineVisual}><SpatialIcon icon={engineIcons[1]} label="CREATE"/></div>
         </article>
 
         <article className={`${styles.engineStage} ${styles.engineStageThree}`}>
           <header><span className={styles.engineNumber}>03</span><h3 className={styles.engineStageTitle}>WE DISTRIBUTE IT</h3></header>
           <p className={styles.engineCopy}>We get it in front of the right people, on the right platforms, so the work actually gets seen.</p>
-          <div className={styles.engineVisual}><DistributionSignalIcon/></div>
+          <div className={styles.engineVisual}><SpatialIcon icon={engineIcons[2]} label="AMPLIFY"/></div>
         </article>
       </div>
 
@@ -307,13 +224,11 @@ export default function HeroVariationPage() {
         <h2 className={styles.startedHeading} id="getting-started-heading"><span>GETTING STARTED</span><span>IS EASIER THAN</span><span>YOU&apos;D THINK</span></h2>
       </div>
       <div className={styles.startedJourney}>
-        <svg className={styles.startedRoute} viewBox="0 0 1200 610" preserveAspectRatio="none" aria-hidden="true"><path d="M62 295C230 295 320 226 440 226S720 104 918 104H1088"/><path className={styles.startedRouteFinal} d="M918 104H1088"/><circle cx="62" cy="295" r="4"/><circle cx="440" cy="226" r="4"/><circle cx="918" cy="104" r="4"/><circle cx="1088" cy="104" r="4"/></svg>
-        <svg className={styles.startedRouteTablet} viewBox="0 0 1000 850" preserveAspectRatio="none" aria-hidden="true"><path d="M70 92C290 92 550 250 720 250S650 575 390 575S650 760 860 760"/><path className={styles.startedRouteFinal} d="M720 760H860"/><circle cx="70" cy="92" r="4"/><circle cx="720" cy="250" r="4"/><circle cx="390" cy="575" r="4"/><circle cx="860" cy="760" r="4"/></svg>
         {startSteps.map(([number,title,copy],index)=>{
-          const Visual = startedVisuals[index];
+          const StepIcon = startedIcons[index];
           const positionClass = [styles.startedStepOne,styles.startedStepTwo,styles.startedStepThree][index];
           return <article className={`${styles.startedStep} ${positionClass}`} key={number}>
-            <div className={styles.startedVisual}><Visual/></div>
+            <div className={styles.startedVisual}><StepIcon strokeWidth={1.2}/><span aria-hidden="true">0{index+1}</span></div>
             <header className={styles.startedStepHeader}><span className={styles.startedIndex} aria-hidden="true">{number}</span><div><small>STEP {number}</small><h3 className={styles.startedTitle}>{title}</h3></div></header>
             <p className={styles.startedCopy}>{copy}</p>
           </article>;
