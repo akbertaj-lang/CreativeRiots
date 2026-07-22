@@ -19,6 +19,12 @@ const barlowCondensed = localFont({
   display: "swap",
 });
 
+const figtree = localFont({
+  src: "../node_modules/@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2",
+  variable: "--font-figtree",
+  display: "swap",
+});
+
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host");
@@ -37,6 +43,6 @@ export const viewport = { themeColor: "#090909", width: "device-width", initialS
 export default function RootLayout({ children }: Readonly<{children:React.ReactNode}>) {
   return <html lang="en">
     <head/>
-    <body className={`${inter.variable} ${barlowCondensed.variable}`}>{children}</body>
+    <body className={`${inter.variable} ${barlowCondensed.variable} ${figtree.variable}`}>{children}</body>
   </html>;
 }

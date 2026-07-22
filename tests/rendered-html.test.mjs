@@ -39,3 +39,14 @@ test("keeps the approved variation route available", async () => {
   assert.match(html, /READY TO TALK/i);
   assert.match(html, /mailto:hello@creativeriots\.com/i);
 });
+
+test("adds the separate experimental variation without replacing the approved routes", async () => {
+  const response = await render("/variation-b");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Content as Signal/i);
+  assert.match(html, /id="experimental-main"/i);
+  assert.match(html, /id="engine-b"/i);
+  assert.match(html, /id="talk-b"/i);
+  assert.match(html, /Skip to main content/i);
+});
