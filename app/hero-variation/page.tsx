@@ -60,7 +60,7 @@ function CalendlyEmbed() {
     return () => observer.disconnect();
   }, [shouldLoad]);
 
-  const embedUrl = url ? `${url}${url.includes("?") ? "&" : "?"}hide_gdpr_banner=1&background_color=f4f5ed&text_color=111111&primary_color=2148ff` : "";
+  const embedUrl = url ? `${url}${url.includes("?") ? "&" : "?"}hide_gdpr_banner=1&background_color=dce8ee&text_color=18324a&primary_color=18324a` : "";
 
   return <div className={styles.calendarFrame} ref={shellRef}>
     <div className={styles.calendarBar}><span/><b>BOOKING WINDOW</b><em>LIVE AVAILABILITY</em></div>
