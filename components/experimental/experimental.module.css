@@ -81,3 +81,42 @@
   .primaryCta{left:16px;bottom:112px;color:var(--violet)!important;-webkit-text-fill-color:var(--violet)}
   .heroMetrics{bottom:28px}
 }
+
+/* STATIC CAPTURE MODE — every section is present in normal document flow. */
+.page *,.page *:before,.page *:after{animation:none!important;transition:none!important}
+.edgeHeader{position:absolute}
+.cursor{display:none!important}
+.visibility{min-height:auto;padding-bottom:14vh}
+.visibilityTitle{position:relative;top:auto}
+.visibilityLead{position:relative;top:auto;left:auto;margin-top:34px}
+.painField{margin-top:110px}
+.engineViewport{padding:0 4vw;overflow:visible}
+.engineTrack{width:100%;margin:0;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;transform:none!important}
+.engineStage:nth-child(2){transform:none}
+.processTitle{min-height:70vh}
+.act{position:relative;top:auto;min-height:820px}
+.bookingCopy{position:relative;top:auto}
+.booking{min-height:auto}
+.calendarShell{margin-top:8vh}
+.brandField{height:auto;min-height:360px;padding:34px 4vw;cursor:default}
+.brandPlane{position:relative;left:auto;top:auto;width:100%;height:auto;padding:26px;background:var(--white);transform:none!important}
+.brandPlane img{width:100%;height:auto;max-height:260px}
+.brandNames{display:none}
+.dragHint{display:none}
+.archive{min-height:0}
+.archiveFrames{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.storyFrame,.storyFrame:nth-child(1),.storyFrame:nth-child(2),.storyFrame:nth-child(3),.storyActive{position:relative;inset:auto;width:100%;transform:none!important;filter:none!important}
+.storyFrame img{opacity:.72}
+.storyActive img{opacity:1}
+.activeQuote{position:relative;inset:auto;width:min(980px,100%);margin-top:60px}
+
+@media (max-width:720px){
+  .painField{margin-top:70px}
+  .engineTrack{display:block!important}
+  .act{min-height:720px}
+  .archiveFrames{grid-template-columns:1fr}
+  .storyFrame{aspect-ratio:1.6}
+  .activeQuote{margin-top:45px}
+  .brandField{min-height:250px;padding:24px 16px}
+  .brandPlane{padding:12px}
+}

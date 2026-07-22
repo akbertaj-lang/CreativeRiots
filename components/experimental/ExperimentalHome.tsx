@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowDownRight, ArrowRight, Check, Menu, MoveUpRight, Play, Radio, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { experimentalContent as content } from "./experimentalContent";
@@ -70,15 +70,14 @@ function EdgeNavigation({ active, open, setOpen }: { active: number; open: boole
 }
 
 function Hero({ onShowreel }: { onShowreel: () => void }) {
-  const reduced = useReducedMotion();
   return <section className={styles.hero} id="signal" data-section="0" aria-labelledby="signal-heading">
     <div className={styles.heroNoise} aria-hidden="true"/>
     <div className={styles.heroEyebrow}><span>LIVE TRANSMISSION / 001</span><b>{content.hero.eyebrow}</b><i>REC</i></div>
     <h1 id="signal-heading" className={styles.heroTitle}>
-      <motion.span initial={reduced ? false : { x: "-14vw" }} animate={{ x: 0 }} transition={{ duration: 1, ease: [.16, 1, .3, 1] }}>{content.hero.headline[0]}</motion.span>
-      <motion.span initial={reduced ? false : { x: "18vw" }} animate={{ x: 0 }} transition={{ duration: 1.1, delay: .08, ease: [.16, 1, .3, 1] }}>{content.hero.headline[1]}</motion.span>
-      <motion.span className={styles.outlineWord} initial={reduced ? false : { letterSpacing: ".2em", opacity: 0 }} animate={{ letterSpacing: "-.07em", opacity: 1 }} transition={{ duration: 1.25, delay: .12 }}>{content.hero.headline[2]}</motion.span>
-      <motion.span className={styles.acidWord} initial={reduced ? false : { clipPath: "inset(0 100% 0 0)" }} animate={{ clipPath: "inset(0 0% 0 0)" }} transition={{ duration: 1, delay: .3, ease: [.77, 0, .18, 1] }}>{content.hero.headline[3]}</motion.span>
+      <span>{content.hero.headline[0]}</span>
+      <span>{content.hero.headline[1]}</span>
+      <span className={styles.outlineWord}>{content.hero.headline[2]}</span>
+      <span className={styles.acidWord}>{content.hero.headline[3]}</span>
     </h1>
     <button className={styles.heroMedia} type="button" onClick={onShowreel} aria-label="Open Creative Riots showreel preview" data-cursor="PLAY">
       <Image src="/placeholders/hero-content-shoot.jpg" alt="A founder recording content with a creative production team" fill sizes="(max-width: 760px) 86vw, 36vw" priority unoptimized/>
@@ -94,25 +93,20 @@ function Hero({ onShowreel }: { onShowreel: () => void }) {
 }
 
 function Visibility() {
-  const reduced = useReducedMotion();
   return <section className={styles.visibility} id="invisible" data-section="1" aria-labelledby="invisible-heading">
     <div className={styles.signalLoss}><span>SIGNAL STRENGTH</span><b>12%</b><i/></div>
     <h2 id="invisible-heading" className={styles.visibilityTitle}>{content.visibilityHeading.map((line, index) => <span className={index > 1 ? styles.disappearing : ""} key={line}>{line}</span>)}</h2>
     <p className={styles.visibilityLead}>Being great at what you do used to be enough.</p>
-    <div className={styles.painField}>{content.visibility.pains.map((pain, index) => <motion.article key={pain} initial={reduced ? false : { opacity: .18, filter: "blur(5px)" }} whileInView={{ opacity: 1, filter: "blur(0px)" }} viewport={{ amount: .7 }} transition={{ duration: .7 }}><span>0{index + 1}</span><p>{pain}</p></motion.article>)}</div>
+    <div className={styles.painField}>{content.visibility.pains.map((pain, index) => <article key={pain}><span>0{index + 1}</span><p>{pain}</p></article>)}</div>
     <div className={styles.noiseStatement} aria-hidden="true"><span>UNRECEIVED</span><span>UNRECEIVED</span></div>
   </section>;
 }
 
 function Engine() {
-  const section = useRef<HTMLElement>(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: section, offset: ["start end", "end start"] });
-  const travel = useTransform(scrollYProgress, [0, 1], reduced ? ["0%", "0%"] : ["5%", "-24%"]);
-  return <section className={styles.engine} id="engine-b" data-section="2" ref={section} aria-labelledby="engine-b-heading">
+  return <section className={styles.engine} id="engine-b" data-section="2" aria-labelledby="engine-b-heading">
     <header className={styles.engineIntro}><span>03 / DECODE → MULTIPLY</span><h2 id="engine-b-heading">{content.engine.heading}</h2><p>{content.engine.intro}</p></header>
     <div className={styles.engineViewport} data-cursor="EXPLORE">
-      <motion.div className={styles.engineTrack} style={{ x: travel }}>
+      <div className={styles.engineTrack}>
         {content.engine.stages.map(([number, title, copy], index) => <article className={styles.engineStage} key={number}>
           <div className={styles.stageMeta}><span>STAGE {number}</span><i>{["CAPTURED", "TRANSFORMED", "BROADCAST"][index]}</i></div>
           <h3>{title}</h3><p>{copy}</p>
@@ -121,7 +115,7 @@ function Engine() {
             {Array.from({ length: 6 + index * 3 }, (_, item) => <i key={item} style={{ "--item": item } as React.CSSProperties}/>) }
           </div>
         </article>)}
-      </motion.div>
+      </div>
     </div>
     <div className={styles.engineTicker}><span>VOICE</span><b>STORY</b><span>VISION</span><b>EDIT</b><span>POST</span><b>DISTRIBUTE</b><span>REPEAT</span></div>
   </section>;
@@ -140,11 +134,10 @@ function Brands() {
   return <section className={styles.brands} id="proof-b" data-section="4" aria-labelledby="proof-b-heading">
     <header><span>05 / RECEIVED BY</span><h2 id="proof-b-heading">{content.brandsHeading}</h2><p>{content.brandsSubheading}</p></header>
     <div className={styles.brandField} data-cursor="DRAG">
-      <motion.div className={styles.brandPlane} drag="x" dragConstraints={{ left: -620, right: 60 }} dragElastic={.08}>
+      <div className={styles.brandPlane}>
         <Image src="/brand-logos-strip.png" alt="Magic Eden, Animoca Brands, Karate Combat, Pixelmon, Solana Gaming, Jupiter, Forbes Web3, Abstract, Doodles, EDUCHAIN, Pump.fun, Meteora Ecosystem, Nibiru, Pixels, Agglayer, Seedify, Revoke and Somnia" width={1880} height={260} unoptimized/>
         <div className={styles.brandNames}>{content.brands.map((brand, index) => <span key={brand.name} style={{ "--brand": index } as React.CSSProperties}>{brand.name}</span>)}</div>
-      </motion.div>
-      <span className={styles.dragHint}>DRAG THE FIELD <ArrowRight/></span>
+      </div>
     </div>
   </section>;
 }
@@ -160,7 +153,7 @@ function Testimonials() {
           <Image src={testimonial.thumbnail} alt="" fill sizes="(max-width: 800px) 65vw, 32vw" unoptimized/><span>0{index + 1}</span><i>{testimonial.company}</i>
         </button>)}
       </div>
-      <AnimatePresence mode="wait"><motion.article className={styles.activeQuote} key={story.id} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -18 }} transition={{ duration: .45 }} aria-live="polite"><span>STORY 0{active + 1} / 0{content.testimonials.length}</span><blockquote>“{story.quote}”</blockquote><p><strong>{story.name}</strong><i>{story.company}</i></p><div><b style={{ width: `${((active + 1) / content.testimonials.length) * 100}%` }}/></div></motion.article></AnimatePresence>
+      <article className={styles.activeQuote} key={story.id} aria-live="polite"><span>STORY 0{active + 1} / 0{content.testimonials.length}</span><blockquote>“{story.quote}”</blockquote><p><strong>{story.name}</strong><i>{story.company}</i></p><div><b style={{ width: `${((active + 1) / content.testimonials.length) * 100}%` }}/></div></article>
     </div>
   </section>;
 }
@@ -175,26 +168,7 @@ function Booking() {
 
 export default function ExperimentalHome() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState(0);
   const [showreel, setShowreel] = useState(false);
-  const cursor = useRef<HTMLDivElement>(null);
-  const [cursorLabel, setCursorLabel] = useState("");
-
-  useEffect(() => {
-    const move = (event: PointerEvent) => {
-      if (cursor.current) cursor.current.style.transform = `translate3d(${event.clientX}px,${event.clientY}px,0)`;
-      const target = (event.target as HTMLElement).closest<HTMLElement>("[data-cursor]");
-      setCursorLabel(target?.dataset.cursor || "");
-    };
-    window.addEventListener("pointermove", move, { passive: true });
-    return () => window.removeEventListener("pointermove", move);
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) setActiveSection(Number((entry.target as HTMLElement).dataset.section)); }), { rootMargin: "-35% 0px -55%", threshold: 0 });
-    document.querySelectorAll("[data-section]").forEach(section => observer.observe(section));
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     if (!showreel) return;
@@ -205,8 +179,7 @@ export default function ExperimentalHome() {
 
   return <div className={styles.page}>
     <a className={styles.skip} href="#experimental-main">Skip to main content</a>
-    <EdgeNavigation active={activeSection} open={menuOpen} setOpen={setMenuOpen}/>
-    <div ref={cursor} className={`${styles.cursor} ${cursorLabel ? styles.cursorVisible : ""}`} aria-hidden="true"><span>{cursorLabel}</span></div>
+    <EdgeNavigation active={0} open={menuOpen} setOpen={setMenuOpen}/>
     <main id="experimental-main"><Hero onShowreel={() => setShowreel(true)}/><Visibility/><Engine/><Process/><Brands/><Testimonials/><Booking/></main>
     <footer className={styles.footer}><div><span>CREATIVE</span><span>RIOTS</span></div><p>{content.footer.statement}</p><a href="#signal">BACK TO SIGNAL <ArrowRight/></a><small>{content.footer.copyright}</small></footer>
     <AnimatePresence>{showreel && <motion.div className={styles.showreelModal} role="dialog" aria-modal="true" aria-label="Creative Riots showreel preview" initial={{ clipPath: "inset(50% 50% 50% 50%)" }} animate={{ clipPath: "inset(0% 0% 0% 0%)" }} exit={{ clipPath: "inset(50% 50% 50% 50%)" }} transition={{ duration: .7, ease: [.77, 0, .18, 1] }}><button type="button" onClick={() => setShowreel(false)} aria-label="Close showreel"><X/></button><Image src="/placeholders/hero-content-shoot.jpg" alt="Creative Riots content production showreel preview" fill sizes="100vw" unoptimized/><div><span>SHOWREEL / PREVIEW</span><SignalWave dense/><p>Sound remains off until a real showreel source is connected.</p></div></motion.div>}</AnimatePresence>
