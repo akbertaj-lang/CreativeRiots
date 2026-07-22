@@ -1,0 +1,40 @@
+.video-placeholder > img {
+  object-fit: cover;
+  filter: saturate(.8) contrast(1.04) brightness(.76);
+  transition: transform .55s ease, filter .3s ease;
+}
+
+.video-placeholder:hover > img {
+  transform: scale(1.025);
+  filter: saturate(.9) contrast(1.04) brightness(.82);
+}
+
+.proof-placeholder > img {
+  object-fit: cover;
+  filter: saturate(.72) contrast(1.06) brightness(.7);
+  transition: transform .6s ease;
+}
+
+.proof-placeholder:hover > img {
+  transform: scale(1.025);
+}
+
+.proof-placeholder::before {
+  display: none;
+}
+
+.proof-placeholder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, .08), rgba(0, 0, 0, .08) 50%, rgba(0, 0, 0, .78));
+}
+
+.proof-placeholder > span,
+.proof-placeholder > b {
+  z-index: 2;
+}
+
+.proof-placeholder b {
+  color: rgba(255, 255, 255, .4);
+}
