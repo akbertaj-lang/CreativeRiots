@@ -44,7 +44,8 @@ test("adds the separate experimental variation without replacing the approved ro
   const response = await render("/variation-b");
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.match(html, /Content as Signal/i);
+  assert.match(html, /Your Entire Content Engine/i);
+  assert.match(html, /creative-riots-logo-client\.png/i);
   assert.match(html, /id="experimental-main"/i);
   assert.match(html, /id="engine-b"/i);
   assert.match(html, /id="talk-b"/i);

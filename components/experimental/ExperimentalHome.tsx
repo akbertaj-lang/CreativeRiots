@@ -36,7 +36,7 @@ function CalendlyDestination() {
     return () => observer.disconnect();
   }, [load]);
 
-  const embed = url ? `${url}${url.includes("?") ? "&" : "?"}hide_gdpr_banner=1&background_color=ffffff&text_color=ef2b22&primary_color=ef2b22` : "";
+  const embed = url ? `${url}${url.includes("?") ? "&" : "?"}hide_gdpr_banner=1&background_color=f8f7f3&text_color=121212&primary_color=fa5b55` : "";
   return <div className={styles.calendarShell} ref={shell} data-cursor="BOOK">
     <div className={styles.calendarTop}><span><i/> TRANSMISSION OPEN</span><em>CR / CALENDAR</em></div>
     {url && load && !failed && <iframe className={`${styles.calendarFrame} ${ready ? styles.calendarReady : ""}`} src={embed} title="Book a discovery call with Creative Riots" loading="lazy" onLoad={() => setReady(true)} onError={() => setFailed(true)}/>}
@@ -57,7 +57,7 @@ function EdgeNavigation({ active, open, setOpen }: { active: number; open: boole
 
   return <>
     <header className={styles.edgeHeader}>
-      <a className={styles.monogram} href="#signal" aria-label="Creative Riots experimental home"><span>CR</span><i/></a>
+      <a className={styles.monogram} href="#signal" aria-label="Creative Riots experimental home"><Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={150} height={89} unoptimized/></a>
       <div className={styles.sectionReadout} aria-live="polite"><span>{sections[active][0]}</span><b>{sections[active][1]}</b></div>
       <a className={styles.fixedBook} href="#talk-b" data-cursor="BOOK">BOOK <ArrowDownRight/></a>
       <button className={styles.signalMenu} type="button" aria-expanded={open} aria-controls="experimental-menu" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen(!open)}>{open ? <X/> : <Menu/>}<span className={styles.menuPulse}/></button>
@@ -73,8 +73,8 @@ function Hero({ onShowreel }: { onShowreel: () => void }) {
   return <section className={styles.hero} id="signal" data-section="0" aria-labelledby="signal-heading">
     <div className={styles.heroProfile}>
       <div className={styles.heroIdentity}>
-        <span className={styles.heroMark}>CR<i/></span>
-        <div><strong>CREATIVE RIOTS</strong><span>CONTENT ENGINE STUDIO</span><small>LIVE / WORLDWIDE</small></div>
+        <Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={180} height={107} priority unoptimized/>
+        <div><span>CONTENT ENGINE STUDIO</span><small>LIVE / WORLDWIDE</small></div>
       </div>
       <span className={styles.heroEyebrow}>{content.hero.eyebrow}</span>
       <h1 id="signal-heading" className={styles.heroTitle}><span>WE RUN YOUR</span><span>ENTIRE CONTENT</span><span>ENGINE.</span></h1>
@@ -190,7 +190,7 @@ export default function ExperimentalHome() {
     <a className={styles.skip} href="#experimental-main">Skip to main content</a>
     <EdgeNavigation active={0} open={menuOpen} setOpen={setMenuOpen}/>
     <main id="experimental-main"><Hero onShowreel={() => setShowreel(true)}/><Visibility/><Engine/><Process/><Brands/><Testimonials/><Booking/></main>
-    <footer className={styles.footer}><div><span>CREATIVE</span><span>RIOTS</span></div><p>{content.footer.statement}</p><a href="#signal">BACK TO SIGNAL <ArrowRight/></a><small>{content.footer.copyright}</small></footer>
+    <footer className={styles.footer}><Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={180} height={107} unoptimized/><div><span>CREATIVE</span><span>RIOTS</span></div><p>{content.footer.statement}</p><a href="#signal">BACK TO SIGNAL <ArrowRight/></a><small>{content.footer.copyright}</small></footer>
     <AnimatePresence>{showreel && <motion.div className={styles.showreelModal} role="dialog" aria-modal="true" aria-label="Creative Riots showreel preview" initial={{ clipPath: "inset(50% 50% 50% 50%)" }} animate={{ clipPath: "inset(0% 0% 0% 0%)" }} exit={{ clipPath: "inset(50% 50% 50% 50%)" }} transition={{ duration: .7, ease: [.77, 0, .18, 1] }}><button type="button" onClick={() => setShowreel(false)} aria-label="Close showreel"><X/></button><Image src="/placeholders/hero-content-shoot.jpg" alt="Creative Riots content production showreel preview" fill sizes="100vw" unoptimized/><div><span>SHOWREEL / PREVIEW</span><SignalWave dense/><p>Sound remains off until a real showreel source is connected.</p></div></motion.div>}</AnimatePresence>
   </div>;
 }
