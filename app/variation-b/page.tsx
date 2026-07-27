@@ -10,9 +10,9 @@ export const metadata: Metadata = {
     description: "A live creative transmission from hidden expertise to cultural signal.",
     type: "website",
     url: "/variation-b",
-    images: [{ url: "/variation-b-og-v2.png", width: 1536, height: 1024, alt: "Creative Riots — We run your entire content engine" }],
+    images: [{ url: "/variation-b-og-v3.png", width: 1680, height: 945, alt: "Creative Riots — We run your entire content engine" }],
   },
-  twitter: { card: "summary_large_image", title: "Creative Riots — Content as Signal", images: ["/variation-b-og-v2.png"] },
+  twitter: { card: "summary_large_image", title: "Creative Riots — Content as Signal", images: ["/variation-b-og-v3.png"] },
 };
 
 export default function VariationBPage() {

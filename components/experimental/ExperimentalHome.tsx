@@ -36,7 +36,7 @@ function CalendlyDestination() {
     return () => observer.disconnect();
   }, [load]);
 
-  const embed = url ? `${url}${url.includes("?") ? "&" : "?"}hide_gdpr_banner=1&background_color=f5f6ef&text_color=251749&primary_color=3457ff` : "";
+  const embed = url ? `${url}${url.includes("?") ? "&" : "?"}hide_gdpr_banner=1&background_color=ffffff&text_color=ef2b22&primary_color=ef2b22` : "";
   return <div className={styles.calendarShell} ref={shell} data-cursor="BOOK">
     <div className={styles.calendarTop}><span><i/> TRANSMISSION OPEN</span><em>CR / CALENDAR</em></div>
     {url && load && !failed && <iframe className={`${styles.calendarFrame} ${ready ? styles.calendarReady : ""}`} src={embed} title="Book a discovery call with Creative Riots" loading="lazy" onLoad={() => setReady(true)} onError={() => setFailed(true)}/>}
