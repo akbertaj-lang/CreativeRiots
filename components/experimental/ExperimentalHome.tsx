@@ -71,24 +71,33 @@ function EdgeNavigation({ active, open, setOpen }: { active: number; open: boole
 
 function Hero({ onShowreel }: { onShowreel: () => void }) {
   return <section className={styles.hero} id="signal" data-section="0" aria-labelledby="signal-heading">
-    <div className={styles.heroNoise} aria-hidden="true"/>
-    <div className={styles.heroEyebrow}><span>LIVE TRANSMISSION / 001</span><b>{content.hero.eyebrow}</b><i>REC</i></div>
-    <h1 id="signal-heading" className={styles.heroTitle}>
-      <span>{content.hero.headline[0]}</span>
-      <span>{content.hero.headline[1]}</span>
-      <span className={styles.outlineWord}>{content.hero.headline[2]}</span>
-      <span className={styles.acidWord}>{content.hero.headline[3]}</span>
-    </h1>
-    <button className={styles.heroMedia} type="button" onClick={onShowreel} aria-label="Open Creative Riots showreel preview" data-cursor="PLAY">
-      <Image src="/placeholders/hero-content-shoot.jpg" alt="A founder recording content with a creative production team" fill sizes="(max-width: 760px) 86vw, 36vw" priority unoptimized/>
-      <span className={styles.mediaChannels} aria-hidden="true"/>
-      <span className={styles.mediaPlay}><Play fill="currentColor"/></span>
-      <span className={styles.timecode}>00:42:18 / SOURCE A</span>
-    </button>
-    <p className={styles.heroBody}>{content.hero.body}</p>
-    <a className={styles.primaryCta} href="#talk-b" data-cursor="BOOK">BOOK A CALL <ArrowRight/></a>
-    <div className={styles.heroMetrics}>{content.hero.metrics.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div>
-    <div className={styles.heroWave}><SignalWave dense/><span>INPUT</span><b>LIVE SIGNAL</b><em>OUTPUT</em></div>
+    <div className={styles.heroProfile}>
+      <div className={styles.heroIdentity}>
+        <span className={styles.heroMark}>CR<i/></span>
+        <div><strong>CREATIVE RIOTS</strong><span>CONTENT ENGINE STUDIO</span><small>LIVE / WORLDWIDE</small></div>
+      </div>
+      <span className={styles.heroEyebrow}>{content.hero.eyebrow}</span>
+      <h1 id="signal-heading" className={styles.heroTitle}><span>WE RUN YOUR</span><span>ENTIRE CONTENT</span><span>ENGINE.</span></h1>
+      <p className={styles.heroBody}>{content.hero.body}</p>
+      <div className={styles.heroActions}>
+        <a className={styles.primaryCta} href="#talk-b">BOOK A CALL <ArrowRight/></a>
+        <button className={styles.secondaryCta} type="button" onClick={onShowreel}><Play fill="currentColor"/> WATCH SHOWREEL</button>
+      </div>
+      <div className={styles.heroMetrics}>{content.hero.metrics.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div>
+    </div>
+
+    <div className={styles.heroWall} aria-label="A selection of Creative Riots production moments">
+      <button className={`${styles.contentTile} ${styles.tileShowreel}`} type="button" onClick={onShowreel} aria-label="Open Creative Riots showreel preview">
+        <Image src="/placeholders/hero-content-shoot.jpg" alt="A founder recording content with a creative production team" fill sizes="(max-width: 760px) 50vw, 22vw" priority unoptimized/><span><Play fill="currentColor"/> SHOWREEL</span>
+      </button>
+      <div className={`${styles.contentTile} ${styles.tileStatement}`}><small>01 / CAPTURE</small><strong>IDEA<br/>TO POST</strong><span>ONE TEAM</span></div>
+      <div className={styles.contentTile}><Image src="/placeholders/proof-planning.jpg" alt="Creative content planning session" fill sizes="(max-width: 760px) 50vw, 22vw" unoptimized/><span>STRATEGY / 01</span></div>
+      <div className={`${styles.contentTile} ${styles.tileSystem}`}><small>02 / BUILD</small><strong>WEEK<br/>AFTER<br/>WEEK</strong></div>
+      <div className={styles.contentTile}><Image src="/placeholders/proof-editing.jpg" alt="A Creative Riots editor working on client content" fill sizes="(max-width: 760px) 50vw, 22vw" unoptimized/><span>PRODUCTION / 02</span></div>
+      <div className={styles.contentTile}><Image src="/placeholders/case-study-interview.jpg" alt="A Creative Riots client interview" fill sizes="(max-width: 760px) 50vw, 22vw" unoptimized/><span>DISTRIBUTION / 03</span></div>
+    </div>
+
+    <nav className={styles.heroIndex} aria-label="Homepage sections">{sections.slice(1).map(([number,label,href])=><a href={href} key={href}><span>{number}</span>{label}</a>)}</nav>
   </section>;
 }
 
