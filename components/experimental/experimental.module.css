@@ -120,8 +120,16 @@
   background:var(--coral);
 }
 .storyCard p{max-width:690px;margin-top:22px;color:#414141;font-size:13px;line-height:1.55}
+.storyCard .subline{margin-top:20px;color:var(--ink);font-size:clamp(17px,1.8vw,24px);font-weight:700;line-height:1.25}
 .textLink{display:inline-flex;align-items:center;gap:10px;margin-top:25px;font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
 .textLink svg{width:13px}
+
+.filmmakerSection{padding-bottom:190px;background:var(--ink)}
+.filmmakerSection .storyCard{background:var(--ink);color:#fff}
+.filmmakerSection .storyCard>span{color:var(--coral)}
+.filmmakerSection .storyCard h2{box-shadow:inset 0 -.12em 0 var(--coral)}
+.filmmakerSection .storyCard p{max-width:760px;color:#d0d0d0;font-size:15px;line-height:1.65}
+.filmmakerSection .storyCard:before{background:#fff}
 
 .engineSteps{
   width:min(1280px,calc(100% - 48px));

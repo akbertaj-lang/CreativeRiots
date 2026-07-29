@@ -122,7 +122,7 @@ export default function ExperimentalHome() {
           <i aria-hidden="true" />
         </section>
 
-        <section className={styles.editorialSection} id="invisible" data-index="01" aria-labelledby="simple-title">
+        <section className={styles.editorialSection} id="invisible" data-index="01" aria-labelledby="visibility-title">
           <GlitchMedia
             src={media.capture}
             alt="A founder recording content with the Creative Riots production team"
@@ -131,8 +131,10 @@ export default function ExperimentalHome() {
             code="CR / THE PROBLEM / 01"
           />
           <div className={`${styles.storyCard} ${styles.storyLeft}`}>
-            <h2 id="simple-title">Content should<br />feel simple.</h2>
-            <p>You’re brilliant at what you do. Your audience should know it.</p>
+            <span>THE VISIBILITY GAP</span>
+            <h2 id="visibility-title">You’re not showing<br />up enough.</h2>
+            <p className={styles.subline}>And it’s costing you more than you think.</p>
+            <p>Not enough of the right people know who you are, and when you do post, it doesn’t travel far. You know it needs fixing, but you don’t have the time to do it yourself.</p>
             <TextLink href="#engine-b">See how it works</TextLink>
           </div>
         </section>
@@ -167,12 +169,26 @@ export default function ExperimentalHome() {
           />
         </section>
 
-        <section className={styles.editorialSection} id="proof-b" data-index="03" aria-labelledby="numbers-title">
+        <section className={`${styles.editorialSection} ${styles.filmmakerSection}`} id="filmmaker-b" data-index="03" aria-labelledby="filmmaker-title">
+          <GlitchMedia
+            src={media.edit}
+            alt="A filmmaker shaping a Creative Riots production"
+            position="center 54%"
+            code="CR / FILMMAKERS / 03"
+          />
+          <div className={`${styles.storyCard} ${styles.storyRight}`}>
+            <span>CRAFT MEETS CURRENT TOOLS</span>
+            <h2 id="filmmaker-title">Filmmakers<br />at heart.</h2>
+            <p>Before any of this, we studied and made films. This is why we look at content like a filmmaker looks at a scene, what to keep, what to cut, what makes people feel something. And we pair that eye with the latest tools, so the work always feels current.</p>
+          </div>
+        </section>
+
+        <section className={styles.editorialSection} id="proof-b" data-index="04" aria-labelledby="numbers-title">
           <GlitchMedia
             src={media.plan}
             alt="Creative Riots planning content strategy with a client"
             position="center 38%"
-            code="CR / THE PROOF / 03"
+            code="CR / THE PROOF / 04"
           />
           <div className={`${styles.storyCard} ${styles.storyLeft}`}>
             <span>PROOF, NOT PROMISES</span>
@@ -197,17 +213,16 @@ export default function ExperimentalHome() {
           </div>
         </section>
 
-        <section className={styles.editorialSection} id="voices-b" data-index="04" aria-labelledby="different-title">
+        <section className={styles.editorialSection} id="voices-b" data-index="05" aria-labelledby="different-title">
           <GlitchMedia
             src={media.story}
             alt="A Creative Riots client sharing their experience"
             position="center 35%"
-            code="CR / THE PEOPLE / 04"
+            code="CR / THE PEOPLE / 05"
           />
           <div className={`${styles.storyCard} ${styles.storyRight}`}>
-            <span>CREATIVE RIOTS, NOT CONTENT CHAOS</span>
-            <h2 id="different-title">A real team.<br />Not more freelancers.</h2>
-            <p>People who know your voice, understand the goal, and keep the whole content engine moving.</p>
+            <h2 id="different-title">Take their<br />word for it.</h2>
+            <p>Real clients. Real working relationships. Real outcomes. Judge for yourself.</p>
           </div>
           <ThumbnailStrip
             items={content.testimonials.map((testimonial) => ({
@@ -218,16 +233,15 @@ export default function ExperimentalHome() {
           />
         </section>
 
-        <section className={styles.editorialSection} id="start-b" data-index="05" aria-labelledby="next-title">
+        <section className={styles.editorialSection} id="start-b" data-index="06" aria-labelledby="next-title">
           <GlitchMedia
             src={media.capture}
             alt="A Creative Riots production day in progress"
             position="center 58%"
-            code="CR / THE NEXT MOVE / 05"
+            code="CR / THE NEXT MOVE / 06"
           />
           <div className={`${styles.storyCard} ${styles.storyLeft}`}>
-            <span>LOW FRICTION. HIGH OUTPUT.</span>
-            <h2 id="next-title">What happens<br />next?</h2>
+            <h2 id="next-title">How To Start</h2>
             <p>One honest call. One team built around you. Then consistent content that makes your expertise impossible to miss.</p>
           </div>
           <div className={styles.processStrip}>
@@ -254,7 +268,7 @@ export default function ExperimentalHome() {
       <footer className={styles.footer} id="talk-b">
         <div className={styles.footerRule} aria-hidden="true" />
         <div className={styles.footerCta}>
-          <span>Ready to stop being overlooked?</span>
+          <span>Let’s stop planning and start posting.</span>
           <a href={bookingUrl}>Book a call <ArrowRight /></a>
         </div>
         <div className={styles.footerGrid}>

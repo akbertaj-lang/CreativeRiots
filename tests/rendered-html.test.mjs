@@ -50,4 +50,9 @@ test("adds the separate experimental variation without replacing the approved ro
   assert.match(html, /id="engine-b"/i);
   assert.match(html, /id="talk-b"/i);
   assert.match(html, /Skip to main content/i);
+  assert.match(html, /You’re not showing[\s\S]*up enough/i);
+  assert.match(html, /Filmmakers[\s\S]*at heart/i);
+  assert.match(html, /Take their[\s\S]*word for it/i);
+  assert.match(html, /How To Start/i);
+  assert.match(html, /stop planning and start posting/i);
 });
