@@ -18,11 +18,13 @@ function GlitchMedia({
   alt,
   priority = false,
   position = "center",
+  code,
 }: {
   src: string;
   alt: string;
   priority?: boolean;
   position?: string;
+  code: string;
 }) {
   return (
     <div className={styles.media}>
@@ -41,6 +43,9 @@ function GlitchMedia({
       <div className={`${styles.slice} ${styles.sliceTwo}`} aria-hidden="true">
         <Image src={src} alt="" fill unoptimized sizes="100vw" style={{ objectPosition: position }} />
       </div>
+      <span className={styles.mediaStamp}>{code}</span>
+      <i className={styles.cropTop} aria-hidden="true" />
+      <i className={styles.cropBottom} aria-hidden="true" />
     </div>
   );
 }
@@ -117,12 +122,13 @@ export default function ExperimentalHome() {
           <i aria-hidden="true" />
         </section>
 
-        <section className={styles.editorialSection} id="invisible" aria-labelledby="simple-title">
+        <section className={styles.editorialSection} id="invisible" data-index="01" aria-labelledby="simple-title">
           <GlitchMedia
             src={media.capture}
             alt="A founder recording content with the Creative Riots production team"
             priority
             position="center 42%"
+            code="CR / THE PROBLEM / 01"
           />
           <div className={`${styles.storyCard} ${styles.storyLeft}`}>
             <h2 id="simple-title">Content should<br />feel simple.</h2>
@@ -131,11 +137,12 @@ export default function ExperimentalHome() {
           </div>
         </section>
 
-        <section className={styles.editorialSection} id="engine-b" aria-labelledby="engine-title">
+        <section className={styles.editorialSection} id="engine-b" data-index="02" aria-labelledby="engine-title">
           <GlitchMedia
             src={media.edit}
             alt="A Creative Riots editor building a client content system"
             position="center 45%"
+            code="CR / THE ENGINE / 02"
           />
           <div className={`${styles.storyCard} ${styles.storyRight}`}>
             <span>THE CONTENT ENGINE</span>
@@ -160,11 +167,12 @@ export default function ExperimentalHome() {
           />
         </section>
 
-        <section className={styles.editorialSection} id="proof-b" aria-labelledby="numbers-title">
+        <section className={styles.editorialSection} id="proof-b" data-index="03" aria-labelledby="numbers-title">
           <GlitchMedia
             src={media.plan}
             alt="Creative Riots planning content strategy with a client"
             position="center 38%"
+            code="CR / THE PROOF / 03"
           />
           <div className={`${styles.storyCard} ${styles.storyLeft}`}>
             <span>PROOF, NOT PROMISES</span>
@@ -189,11 +197,12 @@ export default function ExperimentalHome() {
           </div>
         </section>
 
-        <section className={styles.editorialSection} id="voices-b" aria-labelledby="different-title">
+        <section className={styles.editorialSection} id="voices-b" data-index="04" aria-labelledby="different-title">
           <GlitchMedia
             src={media.story}
             alt="A Creative Riots client sharing their experience"
             position="center 35%"
+            code="CR / THE PEOPLE / 04"
           />
           <div className={`${styles.storyCard} ${styles.storyRight}`}>
             <span>CREATIVE RIOTS, NOT CONTENT CHAOS</span>
@@ -209,11 +218,12 @@ export default function ExperimentalHome() {
           />
         </section>
 
-        <section className={styles.editorialSection} id="start-b" aria-labelledby="next-title">
+        <section className={styles.editorialSection} id="start-b" data-index="05" aria-labelledby="next-title">
           <GlitchMedia
             src={media.capture}
             alt="A Creative Riots production day in progress"
             position="center 58%"
+            code="CR / THE NEXT MOVE / 05"
           />
           <div className={`${styles.storyCard} ${styles.storyLeft}`}>
             <span>LOW FRICTION. HIGH OUTPUT.</span>
