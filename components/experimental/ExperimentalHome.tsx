@@ -1,196 +1,269 @@
 "use client";
 
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowDownRight, ArrowRight, Check, Menu, MoveUpRight, Play, Radio, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { ArrowRight, Menu, Play, X } from "lucide-react";
+import { useState } from "react";
 import { experimentalContent as content } from "./experimentalContent";
 import styles from "./experimental.module.css";
 
-const sections = [
-  ["01", "SIGNAL", "#signal"], ["02", "INVISIBLE", "#invisible"], ["03", "ENGINE", "#engine-b"],
-  ["04", "START", "#start-b"], ["05", "PROOF", "#proof-b"], ["06", "VOICES", "#voices-b"], ["07", "TALK", "#talk-b"],
-] as const;
+const media = {
+  capture: "/placeholders/hero-content-shoot.jpg",
+  edit: "/placeholders/proof-editing.jpg",
+  plan: "/placeholders/proof-planning.jpg",
+  story: "/placeholders/case-study-interview.jpg",
+} as const;
 
-function SignalWave({ dense = false }: { dense?: boolean }) {
-  return <span className={`${styles.signalWave} ${dense ? styles.signalWaveDense : ""}`} aria-hidden="true">
-    {Array.from({ length: dense ? 42 : 24 }, (_, index) => <i key={index} style={{ "--bar": `${8 + ((index * 17) % 31)}px` } as React.CSSProperties}/>) }
-  </span>;
-}
-
-function CalendlyDestination() {
-  const shell = useRef<HTMLDivElement>(null);
-  const [load, setLoad] = useState(false);
-  const [ready, setReady] = useState(false);
-  const [failed, setFailed] = useState(false);
-  const url = content.booking.calendlyUrl;
-
-  useEffect(() => {
-    const element = shell.current;
-    if (!element || load) return;
-    if (!("IntersectionObserver" in window)) { setLoad(true); return; }
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setLoad(true); observer.disconnect(); }
-    }, { rootMargin: "420px" });
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, [load]);
-
-  const embed = url ? `${url}${url.includes("?") ? "&" : "?"}hide_gdpr_banner=1&background_color=f8f7f3&text_color=121212&primary_color=fa5b55` : "";
-  return <div className={styles.calendarShell} ref={shell} data-cursor="BOOK">
-    <div className={styles.calendarTop}><span><i/> TRANSMISSION OPEN</span><em>CR / CALENDAR</em></div>
-    {url && load && !failed && <iframe className={`${styles.calendarFrame} ${ready ? styles.calendarReady : ""}`} src={embed} title="Book a discovery call with Creative Riots" loading="lazy" onLoad={() => setReady(true)} onError={() => setFailed(true)}/>}
-    {url && load && !ready && !failed && <div className={styles.calendarLoading} role="status"><Radio/><span>Receiving available times</span></div>}
-    {(!url || failed) && <div className={styles.calendarFallback} role={failed ? "alert" : undefined}><span>THE DIRECT LINE</span><p>{failed ? "The calendar couldn’t connect." : "Choose a time to start the conversation."}</p><a href={url || content.booking.fallbackUrl}>OPEN BOOKING <MoveUpRight/></a></div>}
-  </div>;
-}
-
-function EdgeNavigation({ active, open, setOpen }: { active: number; open: boolean; setOpen: (open: boolean) => void }) {
-  useEffect(() => {
-    if (!open) return;
-    const prior = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const escape = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
-    document.addEventListener("keydown", escape);
-    return () => { document.body.style.overflow = prior; document.removeEventListener("keydown", escape); };
-  }, [open, setOpen]);
-
-  return <>
-    <header className={styles.edgeHeader}>
-      <a className={styles.monogram} href="#signal" aria-label="Creative Riots experimental home"><Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={150} height={89} unoptimized/></a>
-      <div className={styles.sectionReadout} aria-live="polite"><span>{sections[active][0]}</span><b>{sections[active][1]}</b></div>
-      <a className={styles.fixedBook} href="#talk-b" data-cursor="BOOK">BOOK <ArrowDownRight/></a>
-      <button className={styles.signalMenu} type="button" aria-expanded={open} aria-controls="experimental-menu" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen(!open)}>{open ? <X/> : <Menu/>}<span className={styles.menuPulse}/></button>
-    </header>
-    <AnimatePresence>{open && <motion.nav id="experimental-menu" className={styles.menuOverlay} aria-label="Experimental navigation" initial={{ clipPath: "circle(0% at 94% 6%)" }} animate={{ clipPath: "circle(145% at 94% 6%)" }} exit={{ clipPath: "circle(0% at 94% 6%)" }} transition={{ duration: .7, ease: [.77, 0, .18, 1] }}>
-      <div className={styles.menuSignal}><SignalWave dense/></div>
-      {sections.map(([number, label, href]) => <a href={href} key={href} onClick={() => setOpen(false)}><span>{number}</span>{label}<ArrowDownRight/></a>)}
-    </motion.nav>}</AnimatePresence>
-  </>;
-}
-
-function Hero({ onShowreel }: { onShowreel: () => void }) {
-  return <section className={styles.hero} id="signal" data-section="0" aria-labelledby="signal-heading">
-    <div className={styles.heroProfile}>
-      <div className={styles.heroIdentity}>
-        <Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={180} height={107} priority unoptimized/>
-        <div><span>CONTENT ENGINE STUDIO</span><small>LIVE / WORLDWIDE</small></div>
+function GlitchMedia({
+  src,
+  alt,
+  priority = false,
+  position = "center",
+}: {
+  src: string;
+  alt: string;
+  priority?: boolean;
+  position?: string;
+}) {
+  return (
+    <div className={styles.media}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        priority={priority}
+        unoptimized
+        sizes="100vw"
+        style={{ objectPosition: position }}
+      />
+      <div className={`${styles.slice} ${styles.sliceOne}`} aria-hidden="true">
+        <Image src={src} alt="" fill unoptimized sizes="100vw" style={{ objectPosition: position }} />
       </div>
-      <span className={styles.heroEyebrow}>{content.hero.eyebrow}</span>
-      <h1 id="signal-heading" className={styles.heroTitle}><span>WE RUN YOUR</span><span>ENTIRE CONTENT</span><span>ENGINE.</span></h1>
-      <p className={styles.heroBody}>{content.hero.body}</p>
-      <div className={styles.heroActions}>
-        <a className={styles.primaryCta} href="#talk-b">BOOK A CALL <ArrowRight/></a>
-        <button className={styles.secondaryCta} type="button" onClick={onShowreel}><Play fill="currentColor"/> WATCH SHOWREEL</button>
+      <div className={`${styles.slice} ${styles.sliceTwo}`} aria-hidden="true">
+        <Image src={src} alt="" fill unoptimized sizes="100vw" style={{ objectPosition: position }} />
       </div>
-      <div className={styles.heroMetrics}>{content.hero.metrics.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div>
     </div>
+  );
+}
 
-    <div className={styles.heroWall} aria-label="A selection of Creative Riots production moments">
-      <button className={`${styles.contentTile} ${styles.tileShowreel}`} type="button" onClick={onShowreel} aria-label="Open Creative Riots showreel preview">
-        <Image src="/placeholders/hero-content-shoot.jpg" alt="A founder recording content with a creative production team" fill sizes="(max-width: 760px) 50vw, 22vw" priority unoptimized/><span><Play fill="currentColor"/> SHOWREEL</span>
+function TextLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a className={styles.textLink} href={href}>
+      <span aria-hidden="true">↳</span>
+      {children}
+      <ArrowRight aria-hidden="true" />
+    </a>
+  );
+}
+
+function Header() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <header className={styles.header}>
+      <a href="#top" className={styles.headerLogo} aria-label="Creative Riots home">
+        <Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={150} height={89} unoptimized />
+      </a>
+      <nav className={`${styles.nav} ${open ? styles.navOpen : ""}`} aria-label="Main navigation">
+        <a href="#engine-b" onClick={() => setOpen(false)}>The engine</a>
+        <a href="#proof-b" onClick={() => setOpen(false)}>Proof</a>
+        <a href="#voices-b" onClick={() => setOpen(false)}>Stories</a>
+        <a href="#talk-b" onClick={() => setOpen(false)}>Book a call</a>
+      </nav>
+      <button
+        className={styles.menuButton}
+        type="button"
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+      >
+        {open ? <X /> : <Menu />}
       </button>
-      <div className={`${styles.contentTile} ${styles.tileStatement}`}><small>01 / CAPTURE</small><strong>IDEA<br/>TO POST</strong><span>ONE TEAM</span></div>
-      <div className={styles.contentTile}><Image src="/placeholders/proof-planning.jpg" alt="Creative content planning session" fill sizes="(max-width: 760px) 50vw, 22vw" unoptimized/><span>STRATEGY / 01</span></div>
-      <div className={`${styles.contentTile} ${styles.tileSystem}`}><small>02 / BUILD</small><strong>WEEK<br/>AFTER<br/>WEEK</strong></div>
-      <div className={styles.contentTile}><Image src="/placeholders/proof-editing.jpg" alt="A Creative Riots editor working on client content" fill sizes="(max-width: 760px) 50vw, 22vw" unoptimized/><span>PRODUCTION / 02</span></div>
-      <div className={styles.contentTile}><Image src="/placeholders/case-study-interview.jpg" alt="A Creative Riots client interview" fill sizes="(max-width: 760px) 50vw, 22vw" unoptimized/><span>DISTRIBUTION / 03</span></div>
-    </div>
-
-    <nav className={styles.heroIndex} aria-label="Homepage sections">{sections.slice(1).map(([number,label,href])=><a href={href} key={href}><span>{number}</span>{label}</a>)}</nav>
-  </section>;
+    </header>
+  );
 }
 
-function Visibility() {
-  return <section className={styles.visibility} id="invisible" data-section="1" aria-labelledby="invisible-heading">
-    <div className={styles.signalLoss}><span>SIGNAL STRENGTH</span><b>12%</b><i/></div>
-    <h2 id="invisible-heading" className={styles.visibilityTitle}>{content.visibilityHeading.map((line, index) => <span className={index > 1 ? styles.disappearing : ""} key={line}>{line}</span>)}</h2>
-    <p className={styles.visibilityLead}>Being great at what you do used to be enough.</p>
-    <div className={styles.painField}>{content.visibility.pains.map((pain, index) => <article key={pain}><span>0{index + 1}</span><p>{pain}</p></article>)}</div>
-    <div className={styles.noiseStatement} aria-hidden="true"><span>UNRECEIVED</span><span>UNRECEIVED</span></div>
-  </section>;
-}
-
-function Engine() {
-  return <section className={styles.engine} id="engine-b" data-section="2" aria-labelledby="engine-b-heading">
-    <header className={styles.engineIntro}><span>03 / DECODE → MULTIPLY</span><h2 id="engine-b-heading">{content.engine.heading}</h2><p>{content.engine.intro}</p></header>
-    <div className={styles.engineViewport} data-cursor="EXPLORE">
-      <div className={styles.engineTrack}>
-        {content.engine.stages.map(([number, title, copy], index) => <article className={styles.engineStage} key={number}>
-          <div className={styles.stageMeta}><span>STAGE {number}</span><i>{["CAPTURED", "TRANSFORMED", "BROADCAST"][index]}</i></div>
-          <h3>{title}</h3><p>{copy}</p>
-          <div className={`${styles.machine} ${styles[`machine${index + 1}`]}`} aria-hidden="true">
-            <span className={styles.seed}/><span className={styles.machinePulse}/>
-            {Array.from({ length: 6 + index * 3 }, (_, item) => <i key={item} style={{ "--item": item } as React.CSSProperties}/>) }
+function ThumbnailStrip({
+  items,
+}: {
+  items: ReadonlyArray<{ image: string; label: string; sublabel?: string }>;
+}) {
+  return (
+    <div className={styles.thumbnailStrip}>
+      {items.map((item) => (
+        <article key={`${item.image}-${item.label}`}>
+          <div>
+            <Image src={item.image} alt="" fill unoptimized sizes="(max-width: 700px) 70vw, 33vw" />
           </div>
-        </article>)}
-      </div>
+          <p>{item.label}{item.sublabel && <small>{item.sublabel}</small>}</p>
+        </article>
+      ))}
     </div>
-    <div className={styles.engineTicker}><span>VOICE</span><b>STORY</b><span>VISION</span><b>EDIT</b><span>POST</span><b>DISTRIBUTE</b><span>REPEAT</span></div>
-  </section>;
-}
-
-function Process() {
-  return <section className={styles.process} id="start-b" data-section="3" aria-labelledby="start-b-heading">
-    <div className={styles.processTitle}><span>04 / THREE ACTS</span><h2 id="start-b-heading">Getting started is easier than you’d think</h2></div>
-    <div className={styles.acts}>{content.gettingStarted.map(([number, title, copy], index) => <article className={styles.act} key={number}>
-      <span className={styles.actNumber}>{number}</span><div className={styles.actSignal} aria-hidden="true"><i/><i/><i/></div><div><small>{["OPEN THE CHANNEL", "BUILD THE SYSTEM", "BECOME THE SIGNAL"][index]}</small><h3>{title}</h3><p>{copy}</p>{index === 0 && <a href="#talk-b">START HERE <ArrowRight/></a>}</div>
-    </article>)}</div>
-  </section>;
-}
-
-function Brands() {
-  return <section className={styles.brands} id="proof-b" data-section="4" aria-labelledby="proof-b-heading">
-    <header><span>05 / RECEIVED BY</span><h2 id="proof-b-heading">{content.brandsHeading}</h2><p>{content.brandsSubheading}</p></header>
-    <div className={styles.brandField} data-cursor="DRAG">
-      <div className={styles.brandPlane}>
-        <Image src="/brand-logos-strip.png" alt="Magic Eden, Animoca Brands, Karate Combat, Pixelmon, Solana Gaming, Jupiter, Forbes Web3, Abstract, Doodles, EDUCHAIN, Pump.fun, Meteora Ecosystem, Nibiru, Pixels, Agglayer, Seedify, Revoke and Somnia" width={1880} height={260} unoptimized/>
-        <div className={styles.brandNames}>{content.brands.map((brand, index) => <span key={brand.name} style={{ "--brand": index } as React.CSSProperties}>{brand.name}</span>)}</div>
-      </div>
-    </div>
-  </section>;
-}
-
-function Testimonials() {
-  const [active, setActive] = useState(0);
-  const story = content.testimonials[active];
-  return <section className={styles.voices} id="voices-b" data-section="5" aria-labelledby="voices-b-heading">
-    <header><span>06 / MEDIA ARCHIVE</span><h2 id="voices-b-heading">{content.testimonialHeading}</h2><p>{content.testimonialSubheading}</p></header>
-    <div className={styles.archive}>
-      <div className={styles.archiveFrames} data-cursor="VIEW">
-        {content.testimonials.map((testimonial, index) => <button type="button" className={`${styles.storyFrame} ${index === active ? styles.storyActive : ""}`} onClick={() => setActive(index)} aria-pressed={index === active} aria-label={`Show testimonial from ${testimonial.name}`} key={testimonial.id}>
-          <Image src={testimonial.thumbnail} alt="" fill sizes="(max-width: 800px) 65vw, 32vw" unoptimized/><span>0{index + 1}</span><i>{testimonial.company}</i>
-        </button>)}
-      </div>
-      <article className={styles.activeQuote} key={story.id} aria-live="polite"><span>STORY 0{active + 1} / 0{content.testimonials.length}</span><blockquote>“{story.quote}”</blockquote><p><strong>{story.name}</strong><i>{story.company}</i></p><div><b style={{ width: `${((active + 1) / content.testimonials.length) * 100}%` }}/></div></article>
-    </div>
-  </section>;
-}
-
-function Booking() {
-  return <section className={styles.booking} id="talk-b" data-section="6" aria-labelledby="talk-b-heading">
-    <div className={styles.bookingHalo} aria-hidden="true"/>
-    <div className={styles.bookingCopy}><span>07 / THE DESTINATION</span><h2 id="talk-b-heading">{content.bookingHeading.map(line => <i key={line}>{line}</i>)}<em>{content.bookingAccent}</em></h2><p>{content.bookingBody}</p><div><span><Check/>30-minute discovery call</span><span><Check/>Honest fit check, no hard sell</span></div></div>
-    <CalendlyDestination/>
-  </section>;
+  );
 }
 
 export default function ExperimentalHome() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [showreel, setShowreel] = useState(false);
+  const bookingUrl = content.booking.calendlyUrl || content.booking.fallbackUrl;
 
-  useEffect(() => {
-    if (!showreel) return;
-    const escape = (event: KeyboardEvent) => { if (event.key === "Escape") setShowreel(false); };
-    document.addEventListener("keydown", escape);
-    return () => document.removeEventListener("keydown", escape);
-  }, [showreel]);
+  return (
+    <div className={styles.page}>
+      <a className={styles.skip} href="#experimental-main">Skip to main content</a>
+      <Header />
 
-  return <div className={styles.page}>
-    <a className={styles.skip} href="#experimental-main">Skip to main content</a>
-    <EdgeNavigation active={0} open={menuOpen} setOpen={setMenuOpen}/>
-    <main id="experimental-main"><Hero onShowreel={() => setShowreel(true)}/><Visibility/><Engine/><Process/><Brands/><Testimonials/><Booking/></main>
-    <footer className={styles.footer}><Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={180} height={107} unoptimized/><div><span>CREATIVE</span><span>RIOTS</span></div><p>{content.footer.statement}</p><a href="#signal">BACK TO SIGNAL <ArrowRight/></a><small>{content.footer.copyright}</small></footer>
-    <AnimatePresence>{showreel && <motion.div className={styles.showreelModal} role="dialog" aria-modal="true" aria-label="Creative Riots showreel preview" initial={{ clipPath: "inset(50% 50% 50% 50%)" }} animate={{ clipPath: "inset(0% 0% 0% 0%)" }} exit={{ clipPath: "inset(50% 50% 50% 50%)" }} transition={{ duration: .7, ease: [.77, 0, .18, 1] }}><button type="button" onClick={() => setShowreel(false)} aria-label="Close showreel"><X/></button><Image src="/placeholders/hero-content-shoot.jpg" alt="Creative Riots content production showreel preview" fill sizes="100vw" unoptimized/><div><span>SHOWREEL / PREVIEW</span><SignalWave dense/><p>Sound remains off until a real showreel source is connected.</p></div></motion.div>}</AnimatePresence>
-  </div>;
+      <main id="experimental-main">
+        <section className={styles.intro} id="top" aria-labelledby="intro-title">
+          <Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={176} height={104} priority unoptimized />
+          <h1 id="intro-title">Hello. We’re Creative Riots.</h1>
+          <p>We run your entire content engine.<br />You bring the expertise. We make sure the world sees it.</p>
+          <i aria-hidden="true" />
+        </section>
+
+        <section className={styles.editorialSection} id="invisible" aria-labelledby="simple-title">
+          <GlitchMedia
+            src={media.capture}
+            alt="A founder recording content with the Creative Riots production team"
+            priority
+            position="center 42%"
+          />
+          <div className={`${styles.storyCard} ${styles.storyLeft}`}>
+            <h2 id="simple-title">Content should<br />feel simple.</h2>
+            <p>You’re brilliant at what you do. Your audience should know it.</p>
+            <TextLink href="#engine-b">See how it works</TextLink>
+          </div>
+        </section>
+
+        <section className={styles.editorialSection} id="engine-b" aria-labelledby="engine-title">
+          <GlitchMedia
+            src={media.edit}
+            alt="A Creative Riots editor building a client content system"
+            position="center 45%"
+          />
+          <div className={`${styles.storyCard} ${styles.storyRight}`}>
+            <span>THE CONTENT ENGINE</span>
+            <h2 id="engine-title">We’re content-engine<br />obsessed.</h2>
+            <p>Strategy, production and distribution—handled by one dedicated team that learns your brand inside out.</p>
+          </div>
+          <div className={styles.engineSteps}>
+            {content.engine.stages.map(([number, title, copy]) => (
+              <article key={number}>
+                <span>{number}</span>
+                <h3>{title}</h3>
+                <p>{copy}</p>
+              </article>
+            ))}
+          </div>
+          <ThumbnailStrip
+            items={[
+              { image: media.plan, label: "Learn your world", sublabel: "Strategy / voice / audience" },
+              { image: media.edit, label: "Build every week", sublabel: "Production / editing / design" },
+              { image: media.capture, label: "Make it travel", sublabel: "Publishing / distribution" },
+            ]}
+          />
+        </section>
+
+        <section className={styles.editorialSection} id="proof-b" aria-labelledby="numbers-title">
+          <GlitchMedia
+            src={media.plan}
+            alt="Creative Riots planning content strategy with a client"
+            position="center 38%"
+          />
+          <div className={`${styles.storyCard} ${styles.storyLeft}`}>
+            <span>PROOF, NOT PROMISES</span>
+            <h2 id="numbers-title">We’ve got<br />numbers too.</h2>
+            <p>Creative work should look good. More importantly, it should pull its weight.</p>
+            <TextLink href="#voices-b">Hear from clients</TextLink>
+          </div>
+          <div className={styles.metrics}>
+            {content.hero.metrics.map(([value, label]) => (
+              <article key={label}><strong>{value}</strong><span>{label}</span></article>
+            ))}
+          </div>
+          <div className={styles.logoBand}>
+            <p>Trusted by teams building what’s next</p>
+            <Image
+              src="/brand-logos-strip.png"
+              alt="Brands Creative Riots has worked with"
+              width={1880}
+              height={260}
+              unoptimized
+            />
+          </div>
+        </section>
+
+        <section className={styles.editorialSection} id="voices-b" aria-labelledby="different-title">
+          <GlitchMedia
+            src={media.story}
+            alt="A Creative Riots client sharing their experience"
+            position="center 35%"
+          />
+          <div className={`${styles.storyCard} ${styles.storyRight}`}>
+            <span>CREATIVE RIOTS, NOT CONTENT CHAOS</span>
+            <h2 id="different-title">A real team.<br />Not more freelancers.</h2>
+            <p>People who know your voice, understand the goal, and keep the whole content engine moving.</p>
+          </div>
+          <ThumbnailStrip
+            items={content.testimonials.map((testimonial) => ({
+              image: testimonial.thumbnail,
+              label: `“${testimonial.quote}”`,
+              sublabel: `${testimonial.name} — ${testimonial.company}`,
+            }))}
+          />
+        </section>
+
+        <section className={styles.editorialSection} id="start-b" aria-labelledby="next-title">
+          <GlitchMedia
+            src={media.capture}
+            alt="A Creative Riots production day in progress"
+            position="center 58%"
+          />
+          <div className={`${styles.storyCard} ${styles.storyLeft}`}>
+            <span>LOW FRICTION. HIGH OUTPUT.</span>
+            <h2 id="next-title">What happens<br />next?</h2>
+            <p>One honest call. One team built around you. Then consistent content that makes your expertise impossible to miss.</p>
+          </div>
+          <div className={styles.processStrip}>
+            {content.gettingStarted.map(([number, title, copy], index) => (
+              <article key={number}>
+                <div className={styles.processImage}>
+                  <Image
+                    src={[media.story, media.plan, media.capture][index]}
+                    alt=""
+                    fill
+                    unoptimized
+                    sizes="(max-width: 700px) 85vw, 33vw"
+                  />
+                  <b>{number}</b>
+                </div>
+                <h3>{title}</h3>
+                <p>{copy}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+
+      <footer className={styles.footer} id="talk-b">
+        <div className={styles.footerRule} aria-hidden="true" />
+        <div className={styles.footerCta}>
+          <span>Ready to stop being overlooked?</span>
+          <a href={bookingUrl}>Book a call <ArrowRight /></a>
+        </div>
+        <div className={styles.footerGrid}>
+          <div>
+            <Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={180} height={107} unoptimized />
+            <p>{content.footer.statement}</p>
+          </div>
+          <nav aria-label="Footer navigation">
+            <a href="#engine-b">The engine</a>
+            <a href="#proof-b">Our proof</a>
+            <a href="#voices-b">Client stories</a>
+          </nav>
+          <div className={styles.footerContact}>
+            <strong>LET’S TALK</strong>
+            <a href="mailto:hello@creativeriots.com">hello@creativeriots.com</a>
+          </div>
+        </div>
+        <small>© 2026 CREATIVE RIOTS</small>
+      </footer>
+    </div>
+  );
 }

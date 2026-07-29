@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "/variation-b",
     images: [{
-      url: "/variation-b-og-v4.png",
+      url: "/variation-b-og-v5.png",
       width: 1672,
       height: 941,
       alt: "Creative Riots — We run your entire content engine",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Creative Riots — Your Entire Content Engine",
-    images: ["/variation-b-og-v4.png"],
+    images: ["/variation-b-og-v5.png"],
   },
 };
 
