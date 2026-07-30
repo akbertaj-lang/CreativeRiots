@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, Menu, Play, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { experimentalContent as content } from "./experimentalContent";
 import styles from "./experimental.module.css";
@@ -37,12 +37,8 @@ function GlitchMedia({
         sizes="100vw"
         style={{ objectPosition: position }}
       />
-      <div className={`${styles.slice} ${styles.sliceOne}`} aria-hidden="true">
-        <Image src={src} alt="" fill unoptimized sizes="100vw" style={{ objectPosition: position }} />
-      </div>
-      <div className={`${styles.slice} ${styles.sliceTwo}`} aria-hidden="true">
-        <Image src={src} alt="" fill unoptimized sizes="100vw" style={{ objectPosition: position }} />
-      </div>
+      <div className={`${styles.slice} ${styles.sliceOne}`} aria-hidden="true" />
+      <div className={`${styles.slice} ${styles.sliceTwo}`} aria-hidden="true" />
       <span className={styles.mediaStamp}>{code}</span>
       <i className={styles.cropTop} aria-hidden="true" />
       <i className={styles.cropBottom} aria-hidden="true" />
@@ -116,13 +112,12 @@ export default function ExperimentalHome() {
 
       <main id="experimental-main">
         <section className={styles.intro} id="top" aria-labelledby="intro-title">
-          <Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={176} height={104} priority unoptimized />
+          <span>CONTENT ENGINE STUDIO</span>
           <h1 id="intro-title">Hello. We’re Creative Riots.</h1>
-          <p>We run your entire content engine.<br />You bring the expertise. We make sure the world sees it.</p>
-          <i aria-hidden="true" />
+          <p>We run your entire content engine. You bring the expertise. We make sure the world sees it.</p>
         </section>
 
-        <section className={styles.editorialSection} id="invisible" data-index="01" aria-labelledby="visibility-title">
+        <section className={`${styles.editorialSection} ${styles.visibilitySection}`} id="invisible" data-index="01" aria-labelledby="visibility-title">
           <GlitchMedia
             src={media.capture}
             alt="A founder recording content with the Creative Riots production team"
@@ -130,7 +125,7 @@ export default function ExperimentalHome() {
             position="center 42%"
             code="CR / THE PROBLEM / 01"
           />
-          <div className={`${styles.storyCard} ${styles.storyLeft}`}>
+          <div className={styles.storyCard}>
             <span>THE VISIBILITY GAP</span>
             <h2 id="visibility-title">You’re not showing<br />up enough.</h2>
             <p className={styles.subline}>And it’s costing you more than you think.</p>
@@ -139,14 +134,14 @@ export default function ExperimentalHome() {
           </div>
         </section>
 
-        <section className={styles.editorialSection} id="engine-b" data-index="02" aria-labelledby="engine-title">
+        <section className={`${styles.editorialSection} ${styles.engineSection}`} id="engine-b" data-index="02" aria-labelledby="engine-title">
           <GlitchMedia
             src={media.edit}
             alt="A Creative Riots editor building a client content system"
             position="center 45%"
             code="CR / THE ENGINE / 02"
           />
-          <div className={`${styles.storyCard} ${styles.storyRight}`}>
+          <div className={styles.storyCard}>
             <span>THE CONTENT ENGINE</span>
             <h2 id="engine-title">We’re content-engine<br />obsessed.</h2>
             <p>Strategy, production and distribution—handled by one dedicated team that learns your brand inside out.</p>
@@ -176,21 +171,21 @@ export default function ExperimentalHome() {
             position="center 54%"
             code="CR / FILMMAKERS / 03"
           />
-          <div className={`${styles.storyCard} ${styles.storyRight}`}>
+          <div className={styles.storyCard}>
             <span>CRAFT MEETS CURRENT TOOLS</span>
             <h2 id="filmmaker-title">Filmmakers<br />at heart.</h2>
             <p>Before any of this, we studied and made films. This is why we look at content like a filmmaker looks at a scene, what to keep, what to cut, what makes people feel something. And we pair that eye with the latest tools, so the work always feels current.</p>
           </div>
         </section>
 
-        <section className={styles.editorialSection} id="proof-b" data-index="04" aria-labelledby="numbers-title">
+        <section className={`${styles.editorialSection} ${styles.numbersSection}`} id="proof-b" data-index="04" aria-labelledby="numbers-title">
           <GlitchMedia
             src={media.plan}
             alt="Creative Riots planning content strategy with a client"
             position="center 38%"
             code="CR / THE PROOF / 04"
           />
-          <div className={`${styles.storyCard} ${styles.storyLeft}`}>
+          <div className={styles.storyCard}>
             <span>PROOF, NOT PROMISES</span>
             <h2 id="numbers-title">We’ve got<br />numbers too.</h2>
             <p>Creative work should look good. More importantly, it should pull its weight.</p>
@@ -213,15 +208,15 @@ export default function ExperimentalHome() {
           </div>
         </section>
 
-        <section className={styles.editorialSection} id="voices-b" data-index="05" aria-labelledby="different-title">
+        <section className={`${styles.editorialSection} ${styles.testimonialsSection}`} id="voices-b" data-index="05" aria-labelledby="different-title">
           <GlitchMedia
             src={media.story}
             alt="A Creative Riots client sharing their experience"
             position="center 35%"
             code="CR / THE PEOPLE / 05"
           />
-          <div className={`${styles.storyCard} ${styles.storyRight}`}>
-            <h2 id="different-title">Take their<br />word for it.</h2>
+          <div className={styles.storyCard}>
+            <h2 id="different-title">Take their<br /><em>word for it.</em></h2>
             <p>Real clients. Real working relationships. Real outcomes. Judge for yourself.</p>
           </div>
           <ThumbnailStrip
@@ -233,30 +228,21 @@ export default function ExperimentalHome() {
           />
         </section>
 
-        <section className={styles.editorialSection} id="start-b" data-index="06" aria-labelledby="next-title">
+        <section className={`${styles.editorialSection} ${styles.startSection}`} id="start-b" data-index="06" aria-labelledby="next-title">
           <GlitchMedia
             src={media.capture}
             alt="A Creative Riots production day in progress"
             position="center 58%"
             code="CR / THE NEXT MOVE / 06"
           />
-          <div className={`${styles.storyCard} ${styles.storyLeft}`}>
+          <div className={styles.storyCard}>
             <h2 id="next-title">How To Start</h2>
             <p>One honest call. One team built around you. Then consistent content that makes your expertise impossible to miss.</p>
           </div>
           <div className={styles.processStrip}>
-            {content.gettingStarted.map(([number, title, copy], index) => (
+            {content.gettingStarted.map(([number, title, copy]) => (
               <article key={number}>
-                <div className={styles.processImage}>
-                  <Image
-                    src={[media.story, media.plan, media.capture][index]}
-                    alt=""
-                    fill
-                    unoptimized
-                    sizes="(max-width: 700px) 85vw, 33vw"
-                  />
-                  <b>{number}</b>
-                </div>
+                <b>{number}</b>
                 <h3>{title}</h3>
                 <p>{copy}</p>
               </article>
@@ -268,7 +254,7 @@ export default function ExperimentalHome() {
       <footer className={styles.footer} id="talk-b">
         <div className={styles.footerRule} aria-hidden="true" />
         <div className={styles.footerCta}>
-          <span>Let’s stop planning and start posting.</span>
+          <span>Let’s stop planning<br />and start posting.</span>
           <a href={bookingUrl}>Book a call <ArrowRight /></a>
         </div>
         <div className={styles.footerGrid}>
