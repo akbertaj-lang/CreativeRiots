@@ -52,13 +52,7 @@ function PanelLink({ href, children }: { href: string; children: React.ReactNode
 export default function ExperimentalHome() {
   const bookingUrl = content.booking.calendlyUrl || content.booking.fallbackUrl;
   const stageImages = [media.plan, media.edit, media.capture];
-  const testimonialItems = [
-    { id: "magic-eden", name: "MAGIC EDEN", company: "CLIENT STORY", quote: "Working with CR is game changing. Unreal results.", thumbnail: media.story },
-    { id: "tiger", name: "TIGER", company: "CLIENT STORY", quote: "Feels like they’re part of our team.", thumbnail: media.edit },
-    { id: "kia", name: "KIA", company: "CLIENT STORY", quote: "Top-notch crew and results every time.", thumbnail: media.plan },
-    { id: "district", name: "DISTRICT", company: "CLIENT STORY", quote: "If you’re not using them, you’re missing out.", thumbnail: media.capture },
-  ];
-  const stageLabels = [["01", "Strategy"], ["02", "Production"], ["04", "Post production"]] as const;
+  const testimonialItems = content.testimonials;
 
   return (
     <div className={styles.page}>
@@ -67,9 +61,15 @@ export default function ExperimentalHome() {
 
       <main id="experimental-main">
         <section className={styles.intro} id="top" aria-labelledby="intro-title">
-          <h1 id="intro-title">Hello. We’re Creative Riots<em>.</em></h1>
-          <p>We’re your creative content engine so your brand shows up, stands out and stays top of mind.</p>
-          <a href="#invisible">Scroll to explore <ChevronDown /></a>
+          <span className={styles.heroEyebrow}>Content Engine Studio</span>
+          <h1 id="intro-title">We run your entire<br /><em>content engine.</em></h1>
+          <p>From the first idea to the final post, a dedicated team that works only with you handles it all.</p>
+          <div className={styles.heroActions}><a href={bookingUrl}>Book a call <ArrowRight /></a><a href="#engine-b">See how it works <ChevronDown /></a></div>
+          <div className={styles.heroMetrics} aria-label="Creative Riots results">
+            <article><strong>10M+</strong><span>Views generated across all channels</span></article>
+            <article><strong>2,000+</strong><span>Videos produced for our clients</span></article>
+            <article><strong>50+</strong><span>Brands supported and growing</span></article>
+          </div>
         </section>
 
         <div className={styles.signalTicker} aria-hidden="true">
@@ -82,7 +82,7 @@ export default function ExperimentalHome() {
         <section className={`${styles.photoSection} ${styles.visibilitySection}`} id="invisible" aria-labelledby="visibility-title">
           <Photo src={media.capture} alt="A founder creating content with the Creative Riots production team" position="center 43%" priority />
           <div className={styles.overlayPanel}>
-            <span>01</span>
+            <span>The Visibility Gap</span>
             <h2 id="visibility-title">You’re not<br />showing up<br /><em>enough.</em></h2>
             <p className={styles.panelLead}>And it’s costing you more than you think.</p>
             <p>Not enough of the right people know who you are, and when you do post, it doesn’t travel far. You know it needs fixing, but you don’t have the time to do it yourself.</p>
@@ -93,16 +93,16 @@ export default function ExperimentalHome() {
         <section className={`${styles.photoSection} ${styles.engineSection}`} id="engine-b" aria-labelledby="engine-title">
           <Photo src={media.edit} alt="A Creative Riots editor building a client content system" position="center 48%" />
           <div className={styles.overlayPanel}>
-            <span>02</span>
+            <span>The Content Engine</span>
             <h2 id="engine-title">We’re content-engine<br /><em>obsessed.</em></h2>
             <p>Strategy, production and distribution—handled by one dedicated team that learns your brand inside out.</p>
             <PanelLink href="#filmmaker-b">See how it works</PanelLink>
           </div>
           <div className={styles.stageStrip}>
-            {content.engine.stages.map(([, , copy], index) => (
-              <article key={stageLabels[index][0]}>
+            {content.engine.stages.map(([number, title, copy], index) => (
+              <article key={number}>
                 <div className={styles.stageImage}><Image src={stageImages[index]} alt="" fill unoptimized sizes="(max-width: 720px) 82vw, 30vw" /></div>
-                <div className={styles.stageLabel}><b>{stageLabels[index][0]}</b><strong>{stageLabels[index][1]}</strong><ArrowRight /></div>
+                <div className={styles.stageLabel}><b>{number}</b><strong>{title}</strong><ArrowRight /></div>
                 <p>{copy}</p>
               </article>
             ))}
@@ -112,7 +112,7 @@ export default function ExperimentalHome() {
         <section className={`${styles.photoSection} ${styles.filmmakerSection}`} id="filmmaker-b" aria-labelledby="filmmaker-title">
           <Photo src={media.plan} alt="Creative Riots approaching content with a filmmaker’s eye" position="center 40%" />
           <div className={styles.overlayPanel}>
-            <span>03</span>
+            <span>Craft Meets Current Tools</span>
             <h2 id="filmmaker-title">Filmmakers<br />at <em>heart.</em></h2>
             <p>Before any of this, we studied and made films. This is why we look at content like a filmmaker looks at a scene, what to keep, what to cut, what makes people feel something. And we pair that eye with the latest tools, so the work always feels current.</p>
             <PanelLink href="#proof-b">See our work</PanelLink>
@@ -124,11 +124,15 @@ export default function ExperimentalHome() {
           </div>
         </section>
 
-        <section className={styles.proofBar} id="proof-b" aria-labelledby="proof-title">
-          <header><span>04</span><h2 id="proof-title">We’ve got<br />numbers <em>too.</em></h2><p>That’s proof our work makes an impact that lasts.</p></header>
-          <div className={styles.metrics}>
-            {[["10M+", "Views across platforms"], ["2,000+", "Projects delivered"], ["50+", "Categories served"]].map(([value, label]) => <article key={label}><strong>{value}</strong><span>{label}</span></article>)}
+        <section className={styles.startBar} id="start-b" aria-labelledby="start-title">
+          <header><span>04</span><h2 id="start-title">How to <em>start.</em></h2><p>One honest call. One team built around you. Then consistent content that makes your expertise impossible to miss.</p></header>
+          <div className={styles.startSteps}>
+            {content.gettingStarted.map(([number, title, copy]) => <article key={number}><b>{number}</b><h3>{title}</h3><p>{copy}</p></article>)}
           </div>
+        </section>
+
+        <section className={`${styles.proofBar} ${styles.brandsBand}`} id="proof-b" aria-labelledby="proof-title">
+          <header><span>05</span><h2 id="proof-title">Brands we’ve<br />worked with</h2><p>Trusted with content by brands ready to be seen.</p></header>
           <div className={styles.logoRow}>
             <Image src="/brand-logos-strip.png" alt="Brands Creative Riots has worked with" width={1880} height={260} unoptimized />
           </div>
@@ -138,8 +142,9 @@ export default function ExperimentalHome() {
           <Photo src={media.story} alt="A Creative Riots client sharing their experience" position="center 38%" />
           <div className={styles.storyArrows} aria-hidden="true"><span><ArrowLeft /></span><span><ArrowRight /></span></div>
           <div className={styles.overlayPanel}>
-            <span>05</span>
+            <span>CR / The People / 06</span>
             <h2 id="stories-title">Take their<br />word <em>for it.</em></h2>
+            <p>Real clients. Real working relationships. Real outcomes. Judge for yourself.</p>
           </div>
           <div className={styles.storyRail}>
             {testimonialItems.map((testimonial) => (
@@ -151,20 +156,17 @@ export default function ExperimentalHome() {
           </div>
         </section>
 
-        <section className={styles.startBar} id="start-b" aria-labelledby="start-title">
-          <header><span>06</span><h2 id="start-title">How to <em>start.</em></h2></header>
-          <div className={styles.startSteps}>
-            {content.gettingStarted.map(([number, title, copy]) => <article key={number}><b>{number}</b><h3>{title}</h3><p>{copy}</p></article>)}
-          </div>
-        </section>
       </main>
 
       <footer className={styles.footer} id="talk-b">
-        <div className={styles.closingCta}><h2>Let’s stop planning<br />and <em>start posting.</em></h2><a href={bookingUrl}>Book a call <ArrowRight /></a></div>
+        <div className={styles.closingCta}>
+          <div><h2>Let’s stop planning<br />and <em>start posting.</em></h2><p>{content.bookingBody}</p></div>
+          <div className={styles.bookingPanel}><span>Booking calendar is not configured in this development build.</span><a href={bookingUrl}>Book a conversation <ArrowRight /></a></div>
+        </div>
         <div className={styles.footerBottom}>
           <Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={150} height={89} unoptimized />
           <small>© 2024 CREATIVE RIOTS. ALL RIGHTS RESERVED.</small>
-          <nav aria-label="Footer navigation"><a href="#engine-b">Work</a><a href="#filmmaker-b">About</a><a href="#voices-b">Resources</a><a href="mailto:hello@creativeriots.com">Contact</a></nav>
+          <nav aria-label="Footer navigation"><a href="#invisible">The Difference</a><a href="#engine-b">Content Engine</a><a href="#voices-b">Testimonials</a><a href="mailto:hello@creativeriots.com">Contact</a></nav>
           <div className={styles.socials} aria-label="Social links"><span>◎</span><span>▶</span><span>in</span></div>
         </div>
       </footer>
