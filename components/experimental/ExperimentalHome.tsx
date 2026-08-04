@@ -132,9 +132,6 @@ export default function ExperimentalHome() {
             <article><strong>50+</strong><span>Brands supported and growing</span></article>
           </div>
           <i className={styles.heroCircle} aria-hidden="true" />
-          <div className={styles.heroFrameMeta} aria-hidden="true">
-            <span>CR / FRAME 001</span><i /><b>Strategy · Production · Distribution</b>
-          </div>
         </section>
 
         <div className={styles.signalTicker} aria-hidden="true">

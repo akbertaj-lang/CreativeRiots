@@ -58,8 +58,6 @@
 .heroMetrics span { display: block; margin-top: 8px; color: var(--muted); font-size: 8px; line-height: 1.4; }
 .heroCircle { position: absolute; right: -60px; bottom: -112px; width: 310px; height: 310px; border: 1px solid rgba(255,41,47,.22); border-radius: 50%; transform: translate3d(calc(var(--section-progress, 0) * -90px), calc(var(--section-progress, 0) * -45px), 0) scale(calc(.94 + var(--section-progress, 0) * .12)); }
 .heroCircle::before, .heroCircle::after { content: ""; position: absolute; border-radius: 50%; border: 1px dashed rgba(255,41,47,.18); }.heroCircle::before { inset: 26px; animation: orbitSpin 18s linear infinite; }.heroCircle::after { inset: 64px; border-style: solid; animation: orbitSpin 11s linear infinite reverse; }
-.heroFrameMeta { position: absolute; left: max(34px, calc((100% - 1120px)/2)); top: 146px; width: 130px; display: grid; gap: 12px; color: rgba(15,15,15,.35); font: 700 8px ui-monospace, Consolas, monospace; letter-spacing: .12em; text-align: left; text-transform: uppercase; }
-.heroFrameMeta i { position: relative; width: 100%; height: 1px; overflow: hidden; background: rgba(15,15,15,.1); }.heroFrameMeta i::after { content: ""; position: absolute; left: -35%; top: 0; width: 35%; height: 100%; background: var(--red); animation: frameScan 2.8s ease-in-out infinite; }.heroFrameMeta b { color: rgba(15,15,15,.18); font-weight: 600; line-height: 1.7; }
 
 .signalTicker { height: 33px; overflow: hidden; background: var(--red); color: #fff; }
 .signalTicker > div { width: max-content; min-width: 200%; height: 100%; display: flex; align-items: center; justify-content: space-around; gap: 18px; animation: ticker 26s linear infinite; }
@@ -253,7 +251,6 @@
   .hero > p { max-width: 560px; }
   .desktopBreak { display: none; }
   .heroCircle { display: none; }
-  .heroFrameMeta { display: none; }
   .signalTicker > div { width: max-content; min-width: 1500px; animation: ticker 24s linear infinite; }
   .visibility { height: auto; padding: 54px 18px 115px; }
   .visibilityMedia { width: 100%; height: 400px; }
@@ -365,7 +362,6 @@
 @keyframes heroPlayhead { 0%,8% { left: 0; } 80%,100% { left: calc(100% - 11px); } }
 @keyframes metricSignal { 0%,78%,100% { text-shadow: none; transform: translateY(0); } 86% { text-shadow: 0 0 22px rgba(255,41,47,.38); transform: translateY(-2px); } }
 @keyframes orbitSpin { to { transform: rotate(360deg); } }
-@keyframes frameScan { 0% { left: -35%; } 55%,100% { left: 110%; } }
 @keyframes logoMarquee { to { transform: translate3d(-50%,0,0); } }
 @keyframes logoScanner { 0% { left: -12%; } 65%,100% { left: 106%; } }
 @keyframes ticker { to { transform: translateX(-50%); } }
