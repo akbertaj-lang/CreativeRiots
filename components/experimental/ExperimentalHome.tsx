@@ -62,11 +62,37 @@ export default function ExperimentalHome() {
     if (!page) return;
 
     const targets = Array.from(page.querySelectorAll<HTMLElement>("[data-reveal]"));
+    const cinematicSections = Array.from(page.querySelectorAll<HTMLElement>("[data-cinematic]"));
     page.classList.add(styles.motionReady);
+
+    let frame = 0;
+    const updateScrollMotion = () => {
+      frame = 0;
+      const viewport = window.innerHeight;
+      const documentHeight = Math.max(document.documentElement.scrollHeight - viewport, 1);
+      page.style.setProperty("--page-progress", String(Math.min(1, Math.max(0, window.scrollY / documentHeight))));
+
+      cinematicSections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const progress = Math.min(1, Math.max(0, (viewport - rect.top) / (viewport + rect.height)));
+        section.style.setProperty("--section-progress", String(progress));
+      });
+    };
+    const requestScrollMotion = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateScrollMotion);
+    };
+    updateScrollMotion();
+    window.addEventListener("scroll", requestScrollMotion, { passive: true });
+    window.addEventListener("resize", requestScrollMotion);
 
     if (!("IntersectionObserver" in window)) {
       targets.forEach((target) => target.classList.add(styles.inView));
-      return;
+      return () => {
+        window.removeEventListener("scroll", requestScrollMotion);
+        window.removeEventListener("resize", requestScrollMotion);
+        if (frame) window.cancelAnimationFrame(frame);
+      };
     }
 
     const observer = new IntersectionObserver((entries) => {
@@ -78,7 +104,12 @@ export default function ExperimentalHome() {
     }, { rootMargin: "0px 0px -10% 0px", threshold: 0.12 });
 
     targets.forEach((target) => observer.observe(target));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", requestScrollMotion);
+      window.removeEventListener("resize", requestScrollMotion);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
@@ -87,7 +118,7 @@ export default function ExperimentalHome() {
       <Header />
 
       <main id="experimental-main">
-        <section className={styles.hero} id="top" aria-labelledby="hero-title">
+        <section className={styles.hero} id="top" aria-labelledby="hero-title" data-cinematic>
           <span className={styles.eyebrow}>Content Engine Studio</span>
           <h1 id="hero-title">We run your entire<br /><em>content engine.</em></h1>
           <p>From the first idea to the final post, a dedicated team that works only with<br className={styles.desktopBreak} /> you handles it all.</p>
@@ -110,7 +141,7 @@ export default function ExperimentalHome() {
           </div>
         </div>
 
-        <section className={styles.visibility} id="invisible" aria-labelledby="visibility-title">
+        <section className={styles.visibility} id="invisible" aria-labelledby="visibility-title" data-cinematic>
           <span className={styles.sectionNumber} aria-hidden="true">01</span>
           <div className={styles.visibilityMedia} data-reveal="media">
             <Photo src={media.capture} alt="A founder being filmed by a Creative Riots production team" position="center 48%" priority />
@@ -123,7 +154,7 @@ export default function ExperimentalHome() {
           </div>
         </section>
 
-        <section className={styles.engine} id="engine-b" aria-labelledby="engine-title">
+        <section className={styles.engine} id="engine-b" aria-labelledby="engine-title" data-cinematic>
           <div className={styles.engineMedia} data-reveal="media">
             <Photo src={media.edit} alt="Creative Riots editors working inside a production suite" position="center 52%" />
           </div>
@@ -134,6 +165,7 @@ export default function ExperimentalHome() {
             <a className={styles.primaryButton} href={bookingUrl}>Book a call <ArrowRight /></a>
           </div>
           <div className={styles.stageStrip}>
+            <div className={styles.engineSignal} aria-hidden="true"><i /><span /><span /><span /></div>
             {content.engine.stages.map(([number, title, copy], index) => {
               const StageIcon = stageIcons[index];
               return (
@@ -151,10 +183,14 @@ export default function ExperimentalHome() {
           </div>
         </section>
 
-        <section className={styles.filmmaker} id="filmmaker-b" aria-labelledby="filmmaker-title">
+        <section className={styles.filmmaker} id="filmmaker-b" aria-labelledby="filmmaker-title" data-cinematic>
           <div className={styles.filmmakerMedia} data-reveal="media">
             <Photo src={media.edit} alt="Filmmakers refining a story in an editing suite" position="center 50%" />
             <span className={styles.cropMark} aria-hidden="true" />
+            <div className={styles.filmInterface} aria-hidden="true">
+              <span><i /> REC</span><b>TC 00:42:17:08</b><em>24 FPS / 4K</em>
+              <div><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /></div>
+            </div>
           </div>
           <div className={`${styles.copyCard} ${styles.filmmakerCard}`} data-reveal="card-right">
             <span>Craft Meets Current Tools</span>
@@ -179,7 +215,7 @@ export default function ExperimentalHome() {
           </div>
         </section>
 
-        <section className={styles.brands} id="proof-b" aria-labelledby="brands-title">
+        <section className={styles.brands} id="proof-b" aria-labelledby="brands-title" data-cinematic>
           <div className={styles.brandsInner}>
             <header data-reveal="left">
               <span aria-hidden="true">05</span>
@@ -193,7 +229,7 @@ export default function ExperimentalHome() {
           </div>
         </section>
 
-        <section className={styles.testimonials} id="voices-b" aria-labelledby="stories-title">
+        <section className={styles.testimonials} id="voices-b" aria-labelledby="stories-title" data-cinematic>
           <div className={styles.testimonialHero} data-reveal="fade">
             <Photo src={media.story} alt="A Creative Riots client sharing their experience on camera" position="center 46%" />
             <span className={styles.cropMark} aria-hidden="true" />
@@ -214,7 +250,7 @@ export default function ExperimentalHome() {
         </section>
       </main>
 
-      <footer className={styles.footer} id="talk-b">
+      <footer className={styles.footer} id="talk-b" data-cinematic>
         <div className={styles.closingCta}>
           <div data-reveal="left">
             <h2>Let’s stop planning<br /><em>and start posting.</em></h2>
