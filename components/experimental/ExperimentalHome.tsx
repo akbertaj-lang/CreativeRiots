@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { experimentalContent as content } from "./experimentalContent";
 import styles from "./experimental.module.css";
@@ -22,7 +22,8 @@ function Header() {
         {open ? <X /> : <Menu />}
       </button>
       <a className={styles.headerLogo} href="#top" aria-label="Creative Riots home">
-        <Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={150} height={89} priority unoptimized />
+        <Image src="/placeholders/creative-riots-mark.png" alt="" width={34} height={34} priority unoptimized />
+        <span>CREATIVE<br />RIOTS</span>
       </a>
       <a className={styles.headerCta} href="#talk-b">Book a call <ArrowRight /></a>
       <nav className={`${styles.menuPanel} ${open ? styles.menuOpen : ""}`} aria-label="Main navigation">
@@ -51,6 +52,13 @@ function PanelLink({ href, children }: { href: string; children: React.ReactNode
 export default function ExperimentalHome() {
   const bookingUrl = content.booking.calendlyUrl || content.booking.fallbackUrl;
   const stageImages = [media.plan, media.edit, media.capture];
+  const testimonialItems = [
+    { id: "magic-eden", name: "MAGIC EDEN", company: "CLIENT STORY", quote: "Working with CR is game changing. Unreal results.", thumbnail: media.story },
+    { id: "tiger", name: "TIGER", company: "CLIENT STORY", quote: "Feels like they’re part of our team.", thumbnail: media.edit },
+    { id: "kia", name: "KIA", company: "CLIENT STORY", quote: "Top-notch crew and results every time.", thumbnail: media.plan },
+    { id: "district", name: "DISTRICT", company: "CLIENT STORY", quote: "If you’re not using them, you’re missing out.", thumbnail: media.capture },
+  ];
+  const stageLabels = [["01", "Strategy"], ["02", "Production"], ["04", "Post production"]] as const;
 
   return (
     <div className={styles.page}>
@@ -64,18 +72,18 @@ export default function ExperimentalHome() {
           <a href="#invisible">Scroll to explore <ChevronDown /></a>
         </section>
 
-        <section className={styles.photoSection} id="invisible" aria-labelledby="visibility-title">
+        <section className={`${styles.photoSection} ${styles.visibilitySection}`} id="invisible" aria-labelledby="visibility-title">
           <Photo src={media.capture} alt="A founder creating content with the Creative Riots production team" position="center 43%" priority />
           <div className={styles.overlayPanel}>
             <span>01</span>
             <h2 id="visibility-title">You’re not<br />showing up<br /><em>enough.</em></h2>
             <p className={styles.panelLead}>And it’s costing you more than you think.</p>
             <p>Not enough of the right people know who you are, and when you do post, it doesn’t travel far. You know it needs fixing, but you don’t have the time to do it yourself.</p>
-            <PanelLink href="#engine-b">See how we fix it</PanelLink>
+            <PanelLink href="#engine-b">See if we fit</PanelLink>
           </div>
         </section>
 
-        <section className={styles.photoSection} id="engine-b" aria-labelledby="engine-title">
+        <section className={`${styles.photoSection} ${styles.engineSection}`} id="engine-b" aria-labelledby="engine-title">
           <Photo src={media.edit} alt="A Creative Riots editor building a client content system" position="center 48%" />
           <div className={styles.overlayPanel}>
             <span>02</span>
@@ -84,23 +92,23 @@ export default function ExperimentalHome() {
             <PanelLink href="#filmmaker-b">See how it works</PanelLink>
           </div>
           <div className={styles.stageStrip}>
-            {content.engine.stages.map(([number, title, copy], index) => (
-              <article key={number}>
+            {content.engine.stages.map(([, , copy], index) => (
+              <article key={stageLabels[index][0]}>
                 <div className={styles.stageImage}><Image src={stageImages[index]} alt="" fill unoptimized sizes="(max-width: 720px) 82vw, 30vw" /></div>
-                <div className={styles.stageLabel}><b>{number}</b><strong>{title}</strong><ArrowRight /></div>
+                <div className={styles.stageLabel}><b>{stageLabels[index][0]}</b><strong>{stageLabels[index][1]}</strong><ArrowRight /></div>
                 <p>{copy}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className={styles.photoSection} id="filmmaker-b" aria-labelledby="filmmaker-title">
+        <section className={`${styles.photoSection} ${styles.filmmakerSection}`} id="filmmaker-b" aria-labelledby="filmmaker-title">
           <Photo src={media.plan} alt="Creative Riots approaching content with a filmmaker’s eye" position="center 40%" />
           <div className={styles.overlayPanel}>
             <span>03</span>
             <h2 id="filmmaker-title">Filmmakers<br />at <em>heart.</em></h2>
             <p>Before any of this, we studied and made films. This is why we look at content like a filmmaker looks at a scene, what to keep, what to cut, what makes people feel something. And we pair that eye with the latest tools, so the work always feels current.</p>
-            <PanelLink href="#proof-b">See our proof</PanelLink>
+            <PanelLink href="#proof-b">See our work</PanelLink>
           </div>
           <div className={styles.filmStrip} aria-label="Creative Riots production disciplines">
             {[media.story, media.capture, media.edit, media.plan].map((src, index) => (
@@ -112,21 +120,22 @@ export default function ExperimentalHome() {
         <section className={styles.proofBar} id="proof-b" aria-labelledby="proof-title">
           <header><span>04</span><h2 id="proof-title">We’ve got<br />numbers <em>too.</em></h2><p>That’s proof our work makes an impact that lasts.</p></header>
           <div className={styles.metrics}>
-            {content.hero.metrics.map(([value, label]) => <article key={label}><strong>{value}</strong><span>{label}</span></article>)}
+            {[["10M+", "Views across platforms"], ["2,000+", "Projects delivered"], ["50+", "Categories served"]].map(([value, label]) => <article key={label}><strong>{value}</strong><span>{label}</span></article>)}
           </div>
           <div className={styles.logoRow}>
             <Image src="/brand-logos-strip.png" alt="Brands Creative Riots has worked with" width={1880} height={260} unoptimized />
           </div>
         </section>
 
-        <section className={styles.photoSection} id="voices-b" aria-labelledby="stories-title">
+        <section className={`${styles.photoSection} ${styles.voicesSection}`} id="voices-b" aria-labelledby="stories-title">
           <Photo src={media.story} alt="A Creative Riots client sharing their experience" position="center 38%" />
+          <div className={styles.storyArrows} aria-hidden="true"><span><ArrowLeft /></span><span><ArrowRight /></span></div>
           <div className={styles.overlayPanel}>
             <span>05</span>
             <h2 id="stories-title">Take their<br />word <em>for it.</em></h2>
           </div>
           <div className={styles.storyRail}>
-            {content.testimonials.map((testimonial) => (
+            {testimonialItems.map((testimonial) => (
               <article key={testimonial.id}>
                 <div><Image src={testimonial.thumbnail} alt="" fill unoptimized sizes="110px" /></div>
                 <p><strong>{testimonial.name}</strong><small>{testimonial.company}</small><q>{testimonial.quote}</q></p>
@@ -147,8 +156,9 @@ export default function ExperimentalHome() {
         <div className={styles.closingCta}><h2>Let’s stop planning<br />and <em>start posting.</em></h2><a href={bookingUrl}>Book a call <ArrowRight /></a></div>
         <div className={styles.footerBottom}>
           <Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={150} height={89} unoptimized />
-          <small>© 2026 CREATIVE RIOTS. ALL RIGHTS RESERVED.</small>
-          <nav aria-label="Footer navigation"><a href="#engine-b">Work</a><a href="#filmmaker-b">About</a><a href="#voices-b">Stories</a><a href="mailto:hello@creativeriots.com">Contact</a></nav>
+          <small>© 2024 CREATIVE RIOTS. ALL RIGHTS RESERVED.</small>
+          <nav aria-label="Footer navigation"><a href="#engine-b">Work</a><a href="#filmmaker-b">About</a><a href="#voices-b">Resources</a><a href="mailto:hello@creativeriots.com">Contact</a></nav>
+          <div className={styles.socials} aria-label="Social links"><span>◎</span><span>▶</span><span>in</span></div>
         </div>
       </footer>
     </div>
