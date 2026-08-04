@@ -132,6 +132,9 @@ export default function ExperimentalHome() {
             <article><strong>50+</strong><span>Brands supported and growing</span></article>
           </div>
           <i className={styles.heroCircle} aria-hidden="true" />
+          <div className={styles.heroFrameMeta} aria-hidden="true">
+            <span>CR / FRAME 001</span><i /><b>Strategy · Production · Distribution</b>
+          </div>
         </section>
 
         <div className={styles.signalTicker} aria-hidden="true">
@@ -224,7 +227,10 @@ export default function ExperimentalHome() {
             </header>
             <p data-reveal="right">Trusted with content by brands ready to be seen.</p>
             <div className={styles.logoRow} data-reveal="fade">
-              <Image src="/brand-logos-strip.png" alt="Magic Eden, Animoca Brands, Karate Combat, Pixelmon, Solana Gaming, Jupiter, Forbes Web3, Educhain, pump.fun, Meteora, Nibiru, Pixels, Agglayer and Seedify" width={1882} height={291} unoptimized />
+              <div className={styles.logoTrack}>
+                <Image src="/brand-logos-strip.png" alt="Magic Eden, Animoca Brands, Karate Combat, Pixelmon, Solana Gaming, Jupiter, Forbes Web3, Educhain, pump.fun, Meteora, Nibiru, Pixels, Agglayer and Seedify" width={1882} height={291} unoptimized />
+                <Image src="/brand-logos-strip.png" alt="" aria-hidden="true" width={1882} height={291} unoptimized />
+              </div>
             </div>
           </div>
         </section>
