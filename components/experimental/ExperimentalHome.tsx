@@ -72,6 +72,13 @@ export default function ExperimentalHome() {
           <a href="#invisible">Scroll to explore <ChevronDown /></a>
         </section>
 
+        <div className={styles.signalTicker} aria-hidden="true">
+          <div>
+            <span>STRATEGY</span><i>●</i><span>PRODUCTION</span><i>●</i><span>POST</span><i>●</i><span>DISTRIBUTION</span><i>●</i>
+            <span>STRATEGY</span><i>●</i><span>PRODUCTION</span><i>●</i><span>POST</span><i>●</i><span>DISTRIBUTION</span><i>●</i>
+          </div>
+        </div>
+
         <section className={`${styles.photoSection} ${styles.visibilitySection}`} id="invisible" aria-labelledby="visibility-title">
           <Photo src={media.capture} alt="A founder creating content with the Creative Riots production team" position="center 43%" priority />
           <div className={styles.overlayPanel}>
