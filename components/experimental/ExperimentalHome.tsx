@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, ChevronDown, Menu, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown, Clapperboard, Fingerprint, Menu, Play, Send, X } from "lucide-react";
 import { useState } from "react";
 import { experimentalContent as content } from "./experimentalContent";
 import styles from "./experimental.module.css";
@@ -51,7 +51,7 @@ function PanelLink({ href, children }: { href: string; children: React.ReactNode
 
 export default function ExperimentalHome() {
   const bookingUrl = content.booking.calendlyUrl || content.booking.fallbackUrl;
-  const stageImages = [media.plan, media.edit, media.capture];
+  const stageIcons = [Fingerprint, Clapperboard, Send];
   const testimonialItems = content.testimonials;
 
   return (
@@ -99,19 +99,22 @@ export default function ExperimentalHome() {
             <PanelLink href="#filmmaker-b">See how it works</PanelLink>
           </div>
           <div className={styles.stageStrip}>
-            {content.engine.stages.map(([number, title, copy], index) => (
-              <article key={number}>
-                <div className={styles.stageImage}><Image src={stageImages[index]} alt="" fill unoptimized sizes="(max-width: 720px) 82vw, 30vw" /></div>
+            {content.engine.stages.map(([number, title, copy], index) => {
+              const StageIcon = stageIcons[index];
+              return <article key={number}>
+                <div className={styles.stageIcon}><i /><StageIcon strokeWidth={1.35} /><span>{number}</span></div>
                 <div className={styles.stageLabel}><b>{number}</b><strong>{title}</strong><ArrowRight /></div>
                 <p>{copy}</p>
-              </article>
-            ))}
+              </article>;
+            })}
           </div>
         </section>
 
         <section className={`${styles.photoSection} ${styles.filmmakerSection}`} id="filmmaker-b" aria-labelledby="filmmaker-title">
-          <Photo src={media.plan} alt="Creative Riots approaching content with a filmmaker’s eye" position="center 40%" />
-          <div className={styles.overlayPanel}>
+          <Photo src={media.edit} alt="Creative Riots approaching content with a filmmaker’s eye" position="center 46%" />
+          <div className={styles.filmHud} aria-hidden="true"><span><i /> REC</span><b>00:42:17</b><em>24 FPS</em></div>
+          <div className={styles.filmPlay} aria-hidden="true"><Play fill="currentColor" /></div>
+          <div className={`${styles.overlayPanel} ${styles.filmCopy}`}>
             <span>Craft Meets Current Tools</span>
             <h2 id="filmmaker-title">Filmmakers<br />at <em>heart.</em></h2>
             <p>Before any of this, we studied and made films. This is why we look at content like a filmmaker looks at a scene, what to keep, what to cut, what makes people feel something. And we pair that eye with the latest tools, so the work always feels current.</p>
@@ -134,7 +137,10 @@ export default function ExperimentalHome() {
         <section className={`${styles.proofBar} ${styles.brandsBand}`} id="proof-b" aria-labelledby="proof-title">
           <header><span>05</span><h2 id="proof-title">Brands we’ve<br />worked with</h2><p>Trusted with content by brands ready to be seen.</p></header>
           <div className={styles.logoRow}>
-            <Image src="/brand-logos-strip.png" alt="Brands Creative Riots has worked with" width={1880} height={260} unoptimized />
+            <div className={styles.logoTrack}>
+              <Image src="/brand-logos-strip.png" alt="Brands Creative Riots has worked with" width={1880} height={260} unoptimized />
+              <Image src="/brand-logos-strip.png" alt="" width={1880} height={260} unoptimized aria-hidden="true" />
+            </div>
           </div>
         </section>
 
