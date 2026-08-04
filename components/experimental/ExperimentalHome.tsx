@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowRight, ChevronDown, Clapperboard, Fingerprint, Menu, Send, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { experimentalContent as content } from "./experimentalContent";
 import styles from "./experimental.module.css";
 
@@ -55,9 +55,34 @@ function Photo({ src, alt, position = "center", priority = false }: { src: strin
 export default function ExperimentalHome() {
   const bookingUrl = content.booking.calendlyUrl || content.booking.fallbackUrl;
   const stageIcons = [Fingerprint, Clapperboard, Send];
+  const pageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const page = pageRef.current;
+    if (!page) return;
+
+    const targets = Array.from(page.querySelectorAll<HTMLElement>("[data-reveal]"));
+    page.classList.add(styles.motionReady);
+
+    if (!("IntersectionObserver" in window)) {
+      targets.forEach((target) => target.classList.add(styles.inView));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add(styles.inView);
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.12 });
+
+    targets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className={styles.page}>
+    <div ref={pageRef} className={styles.page}>
       <a className={styles.skip} href="#experimental-main">Skip to main content</a>
       <Header />
 
@@ -87,10 +112,10 @@ export default function ExperimentalHome() {
 
         <section className={styles.visibility} id="invisible" aria-labelledby="visibility-title">
           <span className={styles.sectionNumber} aria-hidden="true">01</span>
-          <div className={styles.visibilityMedia}>
+          <div className={styles.visibilityMedia} data-reveal="media">
             <Photo src={media.capture} alt="A founder being filmed by a Creative Riots production team" position="center 48%" priority />
           </div>
-          <div className={`${styles.copyCard} ${styles.visibilityCard}`}>
+          <div className={`${styles.copyCard} ${styles.visibilityCard}`} data-reveal="card-left">
             <span>The Visibility Gap</span>
             <h2 id="visibility-title">You’re not showing<br />up <em>enough.</em></h2>
             <h3>And it’s costing you more than you think.</h3>
@@ -99,10 +124,10 @@ export default function ExperimentalHome() {
         </section>
 
         <section className={styles.engine} id="engine-b" aria-labelledby="engine-title">
-          <div className={styles.engineMedia}>
+          <div className={styles.engineMedia} data-reveal="media">
             <Photo src={media.edit} alt="Creative Riots editors working inside a production suite" position="center 52%" />
           </div>
-          <div className={`${styles.copyCard} ${styles.engineCard}`}>
+          <div className={`${styles.copyCard} ${styles.engineCard}`} data-reveal="card-left">
             <span>The Content Engine</span>
             <h2 id="engine-title">We’re content-engine<br /><em>obsessed.</em></h2>
             <p>Strategy, production and distribution handled by one dedicated team that learns your brand inside out.</p>
@@ -112,7 +137,7 @@ export default function ExperimentalHome() {
             {content.engine.stages.map(([number, title, copy], index) => {
               const StageIcon = stageIcons[index];
               return (
-                <article key={number}>
+                <article key={number} data-reveal="up" style={{ transitionDelay: `${index * 110}ms` }}>
                   <div className={styles.stageVisual}>
                     <i aria-hidden="true" />
                     <StageIcon strokeWidth={1.35} aria-hidden="true" />
@@ -127,11 +152,11 @@ export default function ExperimentalHome() {
         </section>
 
         <section className={styles.filmmaker} id="filmmaker-b" aria-labelledby="filmmaker-title">
-          <div className={styles.filmmakerMedia}>
+          <div className={styles.filmmakerMedia} data-reveal="media">
             <Photo src={media.edit} alt="Filmmakers refining a story in an editing suite" position="center 50%" />
             <span className={styles.cropMark} aria-hidden="true" />
           </div>
-          <div className={`${styles.copyCard} ${styles.filmmakerCard}`}>
+          <div className={`${styles.copyCard} ${styles.filmmakerCard}`} data-reveal="card-right">
             <span>Craft Meets Current Tools</span>
             <h2 id="filmmaker-title">Filmmakers<br /><em>at heart.</em></h2>
             <p>Before any of this, we studied and made films. This is why we look at content like a filmmaker looks at a scene, what to keep, what to cut, what makes people feel something. And we pair that eye with the latest tools, so the work always feels current.</p>
@@ -139,13 +164,13 @@ export default function ExperimentalHome() {
         </section>
 
         <section className={styles.start} id="start-b" aria-labelledby="start-title">
-          <header>
+          <header data-reveal="left">
             <h2 id="start-title">How to <em>start.</em></h2>
             <p>One honest call. One team built around you. Then consistent content that makes your expertise impossible to miss.</p>
           </header>
           <div className={styles.startSteps}>
-            {content.gettingStarted.map(([number, title, copy]) => (
-              <article key={number}>
+            {content.gettingStarted.map(([number, title, copy], index) => (
+              <article key={number} data-reveal="up" style={{ transitionDelay: `${index * 110}ms` }}>
                 <b>{number}</b>
                 <h3>{title}</h3>
                 <p>{copy}</p>
@@ -156,20 +181,20 @@ export default function ExperimentalHome() {
 
         <section className={styles.brands} id="proof-b" aria-labelledby="brands-title">
           <div className={styles.brandsInner}>
-            <header>
+            <header data-reveal="left">
               <span aria-hidden="true">05</span>
               <h2 id="brands-title">Brands<br /><em>We’ve worked with.</em></h2>
               <i aria-hidden="true" />
             </header>
-            <p>Trusted with content by brands ready to be seen.</p>
-            <div className={styles.logoRow}>
+            <p data-reveal="right">Trusted with content by brands ready to be seen.</p>
+            <div className={styles.logoRow} data-reveal="fade">
               <Image src="/brand-logos-strip.png" alt="Magic Eden, Animoca Brands, Karate Combat, Pixelmon, Solana Gaming, Jupiter, Forbes Web3, Educhain, pump.fun, Meteora, Nibiru, Pixels, Agglayer and Seedify" width={1882} height={291} unoptimized />
             </div>
           </div>
         </section>
 
         <section className={styles.testimonials} id="voices-b" aria-labelledby="stories-title">
-          <div className={styles.testimonialHero}>
+          <div className={styles.testimonialHero} data-reveal="fade">
             <Photo src={media.story} alt="A Creative Riots client sharing their experience on camera" position="center 46%" />
             <span className={styles.cropMark} aria-hidden="true" />
             <div className={`${styles.copyCard} ${styles.testimonialCard}`}>
@@ -178,8 +203,8 @@ export default function ExperimentalHome() {
             </div>
           </div>
           <div className={styles.testimonialGrid}>
-            {content.testimonials.map((testimonial) => (
-              <article key={testimonial.id}>
+            {content.testimonials.map((testimonial, index) => (
+              <article key={testimonial.id} data-reveal="up" style={{ transitionDelay: `${index * 110}ms` }}>
                 <div><Image src={testimonial.thumbnail} alt="" fill unoptimized sizes="(max-width: 800px) 88vw, 380px" /></div>
                 <q>{testimonial.quote}</q>
                 <p>{testimonial.name} — {testimonial.company}</p>
@@ -191,11 +216,11 @@ export default function ExperimentalHome() {
 
       <footer className={styles.footer} id="talk-b">
         <div className={styles.closingCta}>
-          <div>
+          <div data-reveal="left">
             <h2>Let’s stop planning<br /><em>and start posting.</em></h2>
             <p>{content.bookingBody}</p>
           </div>
-          <div className={styles.bookingPanel}>
+          <div className={styles.bookingPanel} data-reveal="right">
             <i aria-hidden="true" />
             <span>Booking calendar is not configured in this development build.</span>
             <a href={bookingUrl}>Book a conversation <ArrowRight /></a>
