@@ -179,10 +179,8 @@
 .bookingPanel span { max-width: 300px; margin-top: 20px; color: #555; font: 700 8px/1.7 ui-monospace, Consolas, monospace; letter-spacing: .12em; text-align: center; text-transform: uppercase; }
 .bookingPanel a { margin-top: 26px; padding: 0 0 11px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--ink); font-size: 9px; font-weight: 800; text-transform: uppercase; }
 .bookingPanel a svg { width: 13px; }
-.footerBottom { min-height: 126px; padding: 19px 20px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 11px; background: #1d1d1d; }
-.footerBottom img { width: 76px; height: auto; }
-.footerBottom nav { display: flex; justify-content: center; gap: 34px; color: #b5b5b5; font-size: 10px; }
-.footerBottom small { color: #5f5f5f; font-size: 8px; text-transform: uppercase; }
+.footerBottom { min-height: 126px; padding: 20px; display: grid; place-items: center; background: #1d1d1d; }
+.footerBottom img { width: 84px; height: auto; }
 
 .headerCta, .primaryButton, .secondaryButton, .menuButton, .stageStrip article, .testimonialGrid article > div { transition: transform .35s cubic-bezier(.16,1,.3,1), background .25s ease; }
 .headerCta, .primaryButton { position: relative; overflow: hidden; isolation: isolate; }
@@ -340,10 +338,7 @@
   .closingCta h2 { font-size: 48px; }
   .closingCta > div:first-child > p { font-size: 13px; }
   .bookingPanel { height: 320px; margin-top: 55px; }
-  .footerBottom { margin-top: 70px; padding: 25px 20px; display: flex; flex-direction: column; gap: 20px; }
-  .footerBottom img { justify-self: auto; }
-  .footerBottom nav { flex-wrap: wrap; gap: 18px; }
-  .footerBottom small { margin: 0; }
+  .footerBottom { margin-top: 70px; padding: 25px 20px; }
 }
 
 @keyframes heroDrop { from { opacity: 0; transform: translateY(-16px); } }

@@ -267,13 +267,6 @@ export default function ExperimentalHome() {
         </div>
         <div className={styles.footerBottom}>
           <Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={150} height={67} unoptimized />
-          <nav aria-label="Footer navigation">
-            <a href="#invisible">The Difference</a>
-            <a href="#engine-b">Content Engine</a>
-            <a href="#voices-b">Testimonials</a>
-            <a href="mailto:hello@creativeriots.com">Contact</a>
-          </nav>
-          <small>© 2026 Creative Riots</small>
         </div>
       </footer>
     </div>
