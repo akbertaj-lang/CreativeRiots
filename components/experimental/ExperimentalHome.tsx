@@ -267,6 +267,7 @@ export default function ExperimentalHome() {
         </div>
         <div className={styles.footerBottom}>
           <Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={150} height={67} unoptimized />
+          <small>© 2026 Creative Riots. All rights reserved.</small>
         </div>
       </footer>
     </div>
