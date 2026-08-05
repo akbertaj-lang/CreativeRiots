@@ -3,8 +3,6 @@ import localFont from "next/font/local";
 import { headers } from "next/headers";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
-import "./placeholder-media.css";
-import "./figma-reference.css";
 
 const inter = localFont({
   src: "../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
@@ -16,12 +14,6 @@ const barlowCondensed = localFont({
   src: "../node_modules/@fontsource/barlow-condensed/files/barlow-condensed-latin-700-normal.woff2",
   variable: "--font-barlow-condensed",
   weight: "700",
-  display: "swap",
-});
-
-const figtree = localFont({
-  src: "../node_modules/@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2",
-  variable: "--font-figtree",
   display: "swap",
 });
 
@@ -43,6 +35,6 @@ export const viewport = { themeColor: "#090909", width: "device-width", initialS
 export default function RootLayout({ children }: Readonly<{children:React.ReactNode}>) {
   return <html lang="en">
     <head/>
-    <body className={`${inter.variable} ${barlowCondensed.variable} ${figtree.variable}`}>{children}</body>
+    <body className={`${inter.variable} ${barlowCondensed.variable}`}>{children}</body>
   </html>;
 }

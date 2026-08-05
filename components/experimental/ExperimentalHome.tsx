@@ -22,7 +22,7 @@ function Header() {
         <a className={styles.headerLogo} href="#top" aria-label="Creative Riots home">
           <Image src="/logo-cr-header.png" alt="Creative Riots" width={252} height={94} priority unoptimized />
         </a>
-        <nav id="variation-b-menu" className={`${styles.menuPanel} ${open ? styles.menuOpen : ""}`} aria-label="Main navigation">
+        <nav id="main-menu" className={`${styles.menuPanel} ${open ? styles.menuOpen : ""}`} aria-label="Main navigation">
           <a href="#invisible" onClick={() => setOpen(false)}>The Difference</a>
           <a href="#engine-b" onClick={() => setOpen(false)}>Content Engine</a>
           <a href="#voices-b" onClick={() => setOpen(false)}>Testimonials</a>
@@ -34,7 +34,7 @@ function Header() {
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          aria-controls="variation-b-menu"
+          aria-controls="main-menu"
           onClick={() => setOpen((value) => !value)}
         >
           {open ? <X /> : <Menu />}
