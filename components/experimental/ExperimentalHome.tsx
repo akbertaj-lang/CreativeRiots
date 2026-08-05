@@ -19,6 +19,16 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
+        <a className={styles.headerLogo} href="#top" aria-label="Creative Riots home">
+          <Image src="/logo-cr-header.png" alt="Creative Riots" width={252} height={94} priority unoptimized />
+        </a>
+        <nav id="variation-b-menu" className={`${styles.menuPanel} ${open ? styles.menuOpen : ""}`} aria-label="Main navigation">
+          <a href="#invisible" onClick={() => setOpen(false)}>The Difference</a>
+          <a href="#engine-b" onClick={() => setOpen(false)}>Content Engine</a>
+          <a href="#voices-b" onClick={() => setOpen(false)}>Testimonials</a>
+          <a href="#talk-b" onClick={() => setOpen(false)}>Contact</a>
+        </nav>
+        <a className={styles.headerCta} href="#talk-b">Book a call <ArrowRight /></a>
         <button
           className={styles.menuButton}
           type="button"
@@ -29,16 +39,6 @@ function Header() {
         >
           {open ? <X /> : <Menu />}
         </button>
-        <a className={styles.headerLogo} href="#top" aria-label="Creative Riots home">
-          <Image src="/logo-cr-header.png" alt="Creative Riots" width={252} height={94} priority unoptimized />
-        </a>
-        <a className={styles.headerCta} href="#talk-b">Book a call <ArrowRight /></a>
-        <nav id="variation-b-menu" className={`${styles.menuPanel} ${open ? styles.menuOpen : ""}`} aria-label="Main navigation">
-          <a href="#invisible" onClick={() => setOpen(false)}>The Difference</a>
-          <a href="#engine-b" onClick={() => setOpen(false)}>Content Engine</a>
-          <a href="#voices-b" onClick={() => setOpen(false)}>Testimonials</a>
-          <a href="#talk-b" onClick={() => setOpen(false)}>Contact</a>
-        </nav>
       </div>
     </header>
   );
