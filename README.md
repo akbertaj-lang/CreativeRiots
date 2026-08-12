@@ -21,3 +21,4 @@ Open the local URL shown in the terminal.
 - Confirm the Trustpilot rating before removing the `[confirm]` label.
 - Set `SHOW_CASE_STUDY` in `content/homepage.ts` to remove or restore the featured case study.
 # CreativeR
+# CreativeRiots
