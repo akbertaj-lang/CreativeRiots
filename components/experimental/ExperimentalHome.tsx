@@ -260,13 +260,24 @@ export default function ExperimentalHome() {
             <p>{content.bookingBody}</p>
           </div>
           <div className={styles.bookingPanel} data-reveal="right">
-            <i aria-hidden="true" />
-            <span>Booking calendar is not configured in this development build.</span>
-            <a href={bookingUrl}>Book a conversation <ArrowRight /></a>
+            <div className={styles.bookingPanelIntro}>
+              <i aria-hidden="true" />
+              <span>Book a 30-minute strategy call</span>
+              <a href={bookingUrl} target="_blank" rel="noreferrer">
+                Open Calendly <ArrowRight />
+              </a>
+            </div>
+            <div className={styles.bookingEmbed} aria-label="Calendly booking calendar">
+              <iframe
+                title="Calendly booking calendar"
+                src="https://calendly.com/yaminnv/30-minute-meeting?hide_landing_page_details=1&hide_event_type_details=1&hide_gdpr_banner=1"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
         <div className={styles.footerBottom}>
-          <Image src="/creative-riots-logo-client.png" alt="Creative Riots" width={150} height={67} unoptimized />
+          <Image src="/creative-riots-footer-logo.png" alt="Creative Riots" width={150} height={67} unoptimized />
           <small>© 2026 Creative Riots. All rights reserved.</small>
         </div>
       </footer>

@@ -48,7 +48,7 @@ export const homepage = {
     { id: "testimonial-03", quote: "We started seeing significant social media growth", name: "BEN", company: "SAPIEN", videoUrl: "", thumbnail: "/placeholders/proof-planning.jpg" },
   ],
   booking: {
-    calendlyUrl: process.env.NEXT_PUBLIC_CALENDLY_URL || "",
+    calendlyUrl: "https://calendly.com/yaminnv/30-minute-meeting",
     fallbackUrl: "mailto:hello@creativeriots.com?subject=Discovery%20call%20request",
   },
   footer: {
