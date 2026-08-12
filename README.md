@@ -20,3 +20,4 @@ Open the local URL shown in the terminal.
 - Generated non-client placeholder photography lives in `public/placeholders/` and is referenced from `content/homepage.ts`.
 - Confirm the Trustpilot rating before removing the `[confirm]` label.
 - Set `SHOW_CASE_STUDY` in `content/homepage.ts` to remove or restore the featured case study.
+# CreativeR
