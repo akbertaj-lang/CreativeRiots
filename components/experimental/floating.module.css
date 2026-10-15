@@ -2,6 +2,22 @@
 .versionLink[aria-current="page"],.versionLink:hover { text-decoration:underline; text-decoration-color:#ee5a52; text-decoration-thickness:1px; }
 .float { --float-img-h:40rem; --float-w:34rem; --hang:5rem; --steps-overlap:10rem; }
 .float :global(#top)::before { display:none; }
+.float :global(#top) { grid-template-columns:minmax(0,9fr) minmax(0,10fr);column-gap:3rem;align-items:center; }
+.float :global(#top)>div:first-child { justify-content:center; }
+.float :global(#top) h1 { font-size:4rem; }
+.float :global(#top)>div:first-child>div { margin-top:0;margin-bottom:0; }
+.heroVisual { width:100%;min-width:0;display:flex;flex-direction:column;gap:1.25rem; }
+.float .heroVisual :global([data-ui="heroMedia"]) { width:100%;height:auto;min-height:0;aspect-ratio:16/10;margin:0;align-self:auto; }
+.float .heroVisual :global([data-ui="heroMedia"] figure) { position:absolute;inset:0; }
+.float .heroVisual :global([data-ui="heroMetrics"]) { margin:0;padding:0;border-top:0; }
+.float .heroVisual :global([data-ui="heroMetrics"] article) { padding:0 1.5rem; }
+.float .heroVisual :global([data-ui="heroMetrics"] article:first-child) { padding-left:0; }
+.float .heroVisual :global([data-ui="heroMetrics"] article:last-child) { padding-right:0; }
+.float .heroVisual :global([data-ui="heroMetrics"] span) { font-size:.75rem;line-height:1.45; }
+.float .heroVisual :global([data-ui="heroMetrics"] strong) { font-size:1.6875rem;line-height:1;filter:none;text-shadow:none;box-shadow:none;animation:none; }
+.float .heroVisual :global([data-ui="heroMetrics"] strong)::before,.float .heroVisual :global([data-ui="heroMetrics"] strong)::after { display:none; }
+@media(max-width:1023px){.float :global(#top){grid-template-columns:1fr;gap:3rem;}.float :global(#top) h1{font-size:3.5rem;}.float .heroVisual :global([data-ui="heroMedia"]){aspect-ratio:16/10;flex:auto;}}
+@media(max-width:767px){.float :global(#top) h1{font-size:2.5rem;}.float .heroVisual :global([data-ui="heroMetrics"] article){padding-inline:1rem;}.float .heroVisual :global([data-ui="heroMetrics"] strong){font-size:1.75rem;}}
 .float :global(:is(#invisible,#engine-b,#filmmaker-b,#voices-b)) { padding-block:var(--section-y); }
 .float :global(#engine-b) { --image-bottom:calc(var(--section-y) + var(--hang) + var(--float-img-h)); background:linear-gradient(to bottom,var(--ink) 0 var(--image-bottom),#fff var(--image-bottom) 100%); }
 .float :global(:is(#invisible,#engine-b,#filmmaker-b,#voices-b)) .wrap { display:grid; grid-template-columns:1fr; gap:0; width:100%; margin:0; padding:0 0 var(--hang); }

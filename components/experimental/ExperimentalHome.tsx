@@ -108,9 +108,15 @@ export function CalendlyWidget({ showSkeleton = true, autoResize = false }: {sho
   </div>{fallback && !loaded && <div className={floating.calendarFallback}><a href="https://calendly.com/yaminnv/30-minute-meeting" target="_blank" rel="noreferrer">Open Calendly <ArrowRight /></a></div>}</div>;
 }
 
+function HeroStats({className}:{className:string}) { return <div data-ui="heroMetrics" className={className} aria-label="Creative Riots results">
+  <article><strong>70M+</strong><span>Views generated across all channels</span></article>
+  <article><strong>10,000+</strong><span>Videos produced for our clients</span></article>
+  <article><strong>100+</strong><span>Brands supported and growing</span></article>
+</div>; }
 export default function ExperimentalHome({ isV2 = false,versionSlug="",layout="original" }: { isV2?: boolean;versionSlug?:string;layout?:string }) {
   const styles = isV2 ? scaledStyles : originalStyles;
   const HeroContent = isV2 ? "div" : Fragment;
+  const HeroVisual = layout === "float" ? "div" : Fragment;
   const Split = isV2 ? "div" : Fragment;
   const bookingUrl = content.booking.calendlyUrl || content.booking.fallbackUrl;
   const stageIcons = [Fingerprint, Clapperboard, Send];
@@ -186,13 +192,9 @@ export default function ExperimentalHome({ isV2 = false,versionSlug="",layout="o
             <a className={styles.primaryButton} href={bookingUrl}>Book a call <ArrowRight /></a>
             <a className={styles.secondaryButton} href="#engine-b" onClick={(event) => jumpToSection(event, "engine-b")}>See how it works <ChevronDown /></a>
           </div>
-          <div data-ui="heroMetrics" className={styles.heroMetrics} aria-label="Creative Riots results">
-            <article><strong>70M+</strong><span>Views generated across all channels</span></article>
-            <article><strong>10,000+</strong><span>Videos produced for our clients</span></article>
-            <article><strong>100+</strong><span>Brands supported and growing</span></article>
-          </div>
+          {layout!=="float" && <HeroStats className={styles.heroMetrics}/>}
           </HeroContent>
-          {isV2 && <div className={variation.media}>
+          {isV2 && <HeroVisual {...(layout==="float" ? {className:floating.heroVisual} : {})}><div className={variation.media} data-ui="heroMedia">
             {heroVideo.videoSrc ? (
               <video controls playsInline preload="none" poster={heroVideo.posterSrc} aria-label={heroVideo.videoTitle}>
                 <source src={heroVideo.videoSrc} />
@@ -201,10 +203,10 @@ export default function ExperimentalHome({ isV2 = false,versionSlug="",layout="o
               <figure aria-label={`${heroVideo.videoTitle}: coming soon`}>
                 <img src={heroVideo.posterSrc} alt="Creative Riots filming a founder in the studio" />
                 <span className={variation.play} aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5v14l11-7z" /></svg></span>
-                {layout!=="float" && <figcaption>Showreel coming soon</figcaption>}
+                <figcaption>Showreel coming soon</figcaption>
               </figure>
             )}
-          </div>}
+          </div>{layout==="float" && <HeroStats className={styles.heroMetrics}/>}</HeroVisual>}
           <i className={styles.heroCircle} aria-hidden="true" />
         </section>
 
@@ -351,7 +353,7 @@ export default function ExperimentalHome({ isV2 = false,versionSlug="",layout="o
             <h2>Let’s Stop Planning<br /><em>And Start Posting.</em></h2>
             <p>{content.bookingBody}</p>
           </div>
-          <div data-ui="bookingPanel" className={styles.bookingPanel} data-reveal="right">
+          {versionSlug === "v2" ? <a className={`${styles.primaryButton} ${variation.bookingCta}`} href={bookingUrl} target="_blank" rel="noreferrer">Book a call <ArrowRight /></a> : <div data-ui="bookingPanel" className={styles.bookingPanel} data-reveal="right">
             <div data-ui="bookingPanelIntro" className={styles.bookingPanelIntro}>
               {layout!=="float" && <i aria-hidden="true" />}
               <span>Book a 30-minute strategy call</span>
@@ -366,7 +368,7 @@ export default function ExperimentalHome({ isV2 = false,versionSlug="",layout="o
                 loading="lazy"
               />}
             </div>
-          </div>
+          </div>}
         </div>
         <div data-ui="footerBottom" className={styles.footerBottom}>
           <Image src="/creative-riots-footer-logo.png" alt="Creative Riots" width={150} height={67} unoptimized />
