@@ -203,7 +203,6 @@ export default function ExperimentalHome({ isV2 = false,versionSlug="",layout="o
               <figure aria-label={`${heroVideo.videoTitle}: coming soon`}>
                 <img src={heroVideo.posterSrc} alt="Creative Riots filming a founder in the studio" />
                 <span className={variation.play} aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5v14l11-7z" /></svg></span>
-                <figcaption>Showreel coming soon</figcaption>
               </figure>
             )}
           </div>{layout==="float" && <HeroStats className={styles.heroMetrics}/>}</HeroVisual>}
