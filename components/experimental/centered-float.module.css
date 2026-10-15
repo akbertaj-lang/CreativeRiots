@@ -1,0 +1,21 @@
+.page{--float-img-h:40rem;--float-w:34rem;--hang:5rem;--steps-overlap:10rem;}
+.page :global(:is(#difference,#engine,#filmmakers,#testimonials)){display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+.page :global(:is(#difference,#filmmakers)){padding-bottom:calc(var(--section-y) + var(--hang));}
+.page :global(:is(#difference,#engine,#filmmakers,#testimonials))>figure{grid-area:1/1;height:var(--float-img-h);aspect-ratio:auto;margin:0;width:100%;}
+.page :global(:is(#difference,#engine,#filmmakers,#testimonials))>header{grid-area:1/1;align-self:end;justify-self:center;position:relative;z-index:2;width:min(var(--float-w),100%);min-height:22rem;padding:2.5rem;margin:0;transform:translateY(var(--hang));background:#fff;color:#0b0b0b;border:1px solid rgba(0,0,0,.08);border-top:.25rem solid #ee5a52;box-shadow:0 1.5rem 3rem -.75rem rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.page :global(:is(#difference,#engine,#filmmakers,#testimonials)) h2{font-size:3rem;line-height:1.1;white-space:normal;margin:0 0 1.25rem;}
+.page :global(:is(#difference,#engine,#filmmakers,#testimonials)) h2 span,.page :global(:is(#difference,#engine,#filmmakers,#testimonials)) h2 em{display:block;}
+.page :global(:is(#difference,#engine,#filmmakers,#testimonials))>header p{color:#4a4a4a;}
+.page :global(#engine){padding-top:calc(var(--section-y) + var(--hang));background:linear-gradient(to bottom,#0b0b0b 0 calc(var(--section-y) + var(--hang) + var(--float-img-h)),#fff calc(var(--section-y) + var(--hang) + var(--float-img-h)) 100%);}
+.page :global(#engine)>header{align-self:start;transform:translateY(calc(-1 * var(--hang)));}
+.page :global(#engine)>div{grid-area:2/1;margin-top:calc(-1 * var(--steps-overlap));position:relative;z-index:3;}
+.page :global(#engine)>div>article{box-shadow:0 1.5rem 3rem -.75rem rgba(0,0,0,.25);}
+.page :global(#testimonials)>div{grid-area:2/1;margin-top:calc(var(--hang) + var(--head-gap));}
+@media(max-width:1023px){
+ .page :global(:is(#difference,#engine,#filmmakers,#testimonials)){display:flex;flex-direction:column;padding-block:var(--section-y);background:#fff;}
+ .page :global(:is(#difference,#engine,#filmmakers,#testimonials))>figure{height:auto;aspect-ratio:16/10;order:0;}
+ .page :global(:is(#difference,#engine,#filmmakers,#testimonials))>header{transform:none;order:1;width:100%;min-height:0;}
+ .page :global(#engine)>header{order:-1;}
+ .page :global(#engine)>div,.page :global(#testimonials)>div{order:2;margin-top:var(--head-gap);}
+ .page :global(:is(#difference,#engine,#filmmakers,#testimonials)) h2{font-size:2rem;}
+}

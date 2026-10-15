@@ -6,6 +6,7 @@ import "./globals.css";
 const inter = localFont({
   src: "../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
   variable: "--font-inter",
+  weight: "100 900",
   display: "swap",
 });
 
@@ -29,9 +30,9 @@ export const metadata: Metadata = {
     url: "/",
     images: [
       {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
+        url: "/assets/v1/hero-content-shoot.webp",
+        width: 1600,
+        height: 900,
         alt: "Creative Riots - We run your entire content engine",
       },
     ],
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
-    images: ["/og.png"],
+    images: ["/assets/v1/hero-content-shoot.webp"],
   },
 };
 

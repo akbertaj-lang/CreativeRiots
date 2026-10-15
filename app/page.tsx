@@ -1,5 +1,5 @@
-import ExperimentalHome from "@/components/experimental/ExperimentalHome";
+import CenteredHome from "@/components/experimental/CenteredHome";
 
 export default function HomePage() {
-  return <ExperimentalHome />;
+  return <CenteredHome />;
 }

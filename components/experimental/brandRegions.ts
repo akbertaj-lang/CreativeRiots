@@ -1,0 +1,23 @@
+// Viewports into the existing raster artwork: no redrawing or replacement assets.
+export const brandRegions = [
+  [77, 82, 157, 17, "Unfungible"],
+  [296, 61, 177, 68, "Car Dealership Guy"],
+  [528, 38, 139, 111, "Blue Yeti"],
+  [730, 80, 123, 31, "Centari"],
+  [922, 41, 106, 108, "Fortitude Strength Club"],
+  [1096, 79, 175, 31, "Founder Funnel"],
+  [1324, 56, 176, 75, "The Insurance Dudes"],
+  [1556, 78, 168, 36, "Mindless"],
+  [1781, 45, 143, 100, "Salesforce"],
+  [1978, 80, 148, 32, "Somnia"],
+  [2194, 59, 126, 71, "Tilt Rips"],
+  [62, 244, 170, 38, "Unicity"],
+  [289, 251, 105, 23, "Yard Dawgs"],
+  [452, 239, 198, 46, "Karate Combat"],
+  [716, 247, 170, 33, "Funnelytics"],
+  [1006, 226, 98, 76, "Original infinity brand mark"],
+  [1207, 222, 205, 78, "Qiibee"],
+  [1490, 236, 112, 56, "Blum and Co"],
+  [1677, 247, 169, 34, "Collectiveshift"],
+  [1920, 238, 195, 39, "ZIGChain"],
+] as const;

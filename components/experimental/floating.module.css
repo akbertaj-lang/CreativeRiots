@@ -1,0 +1,40 @@
+.versionLink { text-decoration:none; text-underline-offset:.375rem; }
+.versionLink[aria-current="page"],.versionLink:hover { text-decoration:underline; text-decoration-color:#ee5a52; text-decoration-thickness:1px; }
+.float { --float-img-h:40rem; --float-w:34rem; --hang:5rem; --steps-overlap:10rem; }
+.float :global(#top)::before { display:none; }
+.float :global(:is(#invisible,#engine-b,#filmmaker-b,#voices-b)) { padding-block:var(--section-y); }
+.float :global(#engine-b) { --image-bottom:calc(var(--section-y) + var(--hang) + var(--float-img-h)); background:linear-gradient(to bottom,var(--ink) 0 var(--image-bottom),#fff var(--image-bottom) 100%); }
+.float :global(:is(#invisible,#engine-b,#filmmaker-b,#voices-b)) .wrap { display:grid; grid-template-columns:1fr; gap:0; width:100%; margin:0; padding:0 0 var(--hang); }
+.float :global(:is(#invisible,#engine-b,#filmmaker-b,#voices-b)) .wrap.top { padding-top:var(--hang); padding-bottom:0; }
+.float .wrap :global(:is([data-ui="visibilityMedia"],[data-ui="engineMedia"],[data-ui="filmmakerMedia"])),
+.float :global(#voices-b) .wrap>div:first-child { grid-area:1/1; order:0; width:100%; height:var(--float-img-h); min-height:0; aspect-ratio:auto; margin:0; inset:auto; }
+.float .wrap img { object-position:50% var(--focus-y,30%); }
+.float :global(:is(#invisible,#engine-b,#filmmaker-b,#voices-b)) .wrap :global(:is([data-ui="visibilityCard"],[data-ui="engineCard"],[data-ui="filmmakerCard"],[data-ui="testimonialCard"])) { grid-area:1/1; order:0; align-self:end; justify-self:start; width:min(var(--float-w),100%); max-width:100%; min-height:22rem; height:auto; margin:0; inset:auto; translate:none; transform:translateY(var(--hang)); position:relative; z-index:2; padding:2.5rem; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; background:#fff; color:#0b0b0b; border:1px solid rgba(0,0,0,.08); border-left:.25rem solid #ee5a52; box-shadow:0 1.5rem 3rem -.75rem rgba(0,0,0,.25); }
+.float :global(#engine-b) .wrap.top :global([data-ui="engineCard"]) { align-self:start; transform:translateY(calc(-1 * var(--hang))); }
+.float :global(:is(#invisible,#engine-b,#filmmaker-b,#voices-b)) .wrap h2 { font-size:3rem; line-height:1.1; text-wrap:initial; margin:0 0 1.25rem; }
+.float .wrap h2>span { display:block; white-space:nowrap; color:#0b0b0b; }
+.float .wrap h2>span+span { color:#ee5a52; }
+.float .wrap :global([data-ui$="Card"])>span { font-size:.75rem; margin:0 0 .75rem; }
+.float :global(:is(#invisible,#engine-b,#filmmaker-b,#voices-b)) .wrap p { font-size:1rem; line-height:1.6; color:#4a4a4a; margin:0; }
+.float :global(#invisible) .wrap h3 { font-size:1.25rem; line-height:1.4; font-weight:500; margin:0 0 .75rem; }
+.float :global(#engine-b) .wrap a { margin-top:2rem; }
+.float :global(#engine-b) :global([data-ui="stageStrip"]) { margin-top:calc(-1 * var(--steps-overlap)); position:relative; z-index:3; }
+.float :global(#engine-b) :global([data-ui="stageStrip"] article) { box-shadow:0 1.5rem 3rem -.75rem rgba(0,0,0,.35); border:1px solid rgba(0,0,0,.08); }
+.float :global(#engine-b) :global([data-ui="stageStrip"] article:nth-of-type(2)) { border-color:transparent; }
+.float :global(#voices-b) :global([data-ui="testimonialGrid"]) { margin-top:max(4rem,var(--head-gap)); }
+.float :global([data-ui="testimonialHero"])::after,.float :global([data-ui="testimonialCard"])::before,.float :global([data-ui="testimonialCard"])::after { display:none; }
+.float :global([data-ui="filmmakerMedia"])>div:last-child { inset:1.5rem; }
+@media(max-width:1023px) {
+ .float { --hang:0rem; }
+ .float :global(#engine-b) { background:#fff; }
+ .float :global(:is(#invisible,#engine-b,#filmmaker-b,#voices-b)) .wrap { display:flex; flex-direction:column; padding:0; }
+ .float .wrap :global(:is([data-ui="visibilityMedia"],[data-ui="engineMedia"],[data-ui="filmmakerMedia"])),.float :global(#voices-b) .wrap>div:first-child { height:auto; aspect-ratio:16/10; min-height:0; }
+ .float :global(:is(#invisible,#engine-b,#filmmaker-b,#voices-b)) .wrap :global(:is([data-ui="visibilityCard"],[data-ui="engineCard"],[data-ui="filmmakerCard"],[data-ui="testimonialCard"])) { order:1; width:100%; min-height:0; transform:none; }
+ .float :global(#engine-b) .wrap.top :global([data-ui="engineCard"]) { order:-1; transform:none; }
+ .float :global(#engine-b) :global([data-ui="stageStrip"]) { grid-template-columns:1fr; margin-top:1.5rem; gap:1.5rem; }
+ .float :global(:is(#invisible,#engine-b,#filmmaker-b,#voices-b)) .wrap h2 { font-size:2.75rem; }
+}
+@media(max-width:767px) { .float :global(:is(#invisible,#engine-b,#filmmaker-b,#voices-b)) .wrap h2 { font-size:2rem; } .float .wrap h2>span { white-space:normal; } }
+.calendarFallback { position:absolute; inset:0; display:grid; place-items:center; background:#fff; }
+.calendarFallback a { padding:1rem 1.5rem; background:#ea5652; color:#fff; font-weight:600; text-decoration:none; }
+.booking :global([data-ui="closingCta"]) { align-items:center; }
